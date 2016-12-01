@@ -70,4 +70,21 @@ public class Ingredient {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Getter for all the products in which the ingredient is.
+     * @see Product
+     * @return A list of products.
+     */
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    /**
+     * Setter for all the products in which the ingredient is.
+     * @param products The list of products where the ingredient is.
+     */
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
