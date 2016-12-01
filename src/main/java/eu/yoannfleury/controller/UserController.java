@@ -35,11 +35,30 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    /**
+     * <pre>
+     *     <code>GET /users</code>
+     * </pre>
+     *
+     * Use this route to get all the users stored in the database.
+     *
+     * @return All the users stored in the database.
+     */
     @RequestMapping
     public List<User> users() {
         return this.userRepository.findAll();
     }
 
+    /**
+     * <pre>
+     *     <code>GET /users/{id}</code>
+     * </pre>
+     *
+     * Use this route to get the user with the id.
+     *
+     * @param id Long to identify the user you want to get.
+     * @return The user identified by the parameter id.
+     */
     @RequestMapping("/{id}")
     public User user(@PathVariable long id) {
         if (this.userRepository.findOne(id) == null) {
@@ -49,6 +68,16 @@ public class UserController {
         return this.userRepository.findOne(id);
     }
 
+    /**
+     * <pre>
+     *     <code>POST /users</code>
+     * </pre>
+     *
+     * Use this route to create a new user.
+     *
+     * @param user The user to create.
+     * @return The newly created {@link User}.
+     */
     @RequestMapping(method = RequestMethod.POST)
     public User add(@RequestBody User user) {
         validate(user);
