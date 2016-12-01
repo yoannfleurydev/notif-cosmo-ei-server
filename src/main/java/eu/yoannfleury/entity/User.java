@@ -1,10 +1,6 @@
 package eu.yoannfleury.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.internal.Nullable;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -59,7 +55,8 @@ public class User {
      * The password of the user.
      */
     @Size(min = 5)
-    @JsonIgnore
+    @NotNull
+    @Column(nullable = false)
     private String password;
 
     /**
@@ -69,8 +66,10 @@ public class User {
 
     /**
      * @param id The index of the user.
+     * @param userName The user name of the user.
      * @param firstName The first name of the user.
      * @param lastName The last name of the user.
+     * @param email The email of the user.
      * @param role The {@link Role} of the user.
      */
     public User(long id, String userName, String firstName, String lastName,
