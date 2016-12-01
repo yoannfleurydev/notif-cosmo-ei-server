@@ -2,9 +2,7 @@ package eu.yoannfleury.repository;
 
 import eu.yoannfleury.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

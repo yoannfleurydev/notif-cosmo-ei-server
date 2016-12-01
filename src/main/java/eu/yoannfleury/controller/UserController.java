@@ -6,10 +6,7 @@ import eu.yoannfleury.exception.UserAlreadyExistsException;
 import eu.yoannfleury.exception.UserNotFoundException;
 import eu.yoannfleury.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,11 +15,21 @@ import javax.validation.ValidatorFactory;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * User controller. This controller is made for a simple CRUD on the users.
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    /**
+     * {@link User} repository to interact with database.
+     */
     private final UserRepository userRepository;
 
+    /**
+     * Controller constructor.
+     * @param userRepository The user repository to interact with data.
+     */
     @Autowired
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -31,6 +38,15 @@ public class UserController {
     @RequestMapping
     public List<User> users() {
         return this.userRepository.findAll();
+    }
+
+    @RequestMapping("/{id}")
+    public User user(@PathVariable long id) {
+        if (this.userRepository.findOne(id) == null) {
+            throw new UserNotFoundException(Long.toString(id));
+        }
+
+        return this.userRepository.findOne(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
