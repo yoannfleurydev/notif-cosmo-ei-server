@@ -28,6 +28,11 @@ public class Product {
     @ManyToMany
     private List<Ingredient> ingredients;
 
+    /**
+     * Default constructor
+     */
+    public Product(){}
+
     public Product(String name) {
         this.name = name;
     }

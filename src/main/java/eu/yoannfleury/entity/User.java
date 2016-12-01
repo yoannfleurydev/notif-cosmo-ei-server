@@ -5,7 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Entity User
+ * User entity is a POJO used to store all the data of a user
+ * stored in the database.
  */
 @Entity
 public class User {
@@ -17,7 +18,7 @@ public class User {
     private long id;
 
     /**
-     * The identifier of the user used for connection.
+     * The identifier of the user used for his authentication.
      */
     @NotNull
     @Column(nullable = false, unique = true)
