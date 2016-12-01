@@ -2,6 +2,7 @@ package eu.yoannfleury.controller;
 
 import eu.yoannfleury.entity.User;
 import eu.yoannfleury.exception.UnprocessableEntityException;
+import eu.yoannfleury.exception.UserAlreadyExistsException;
 import eu.yoannfleury.exception.UserNotFoundException;
 import eu.yoannfleury.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public User add(@RequestBody User user) {
         validate(user);
+        exists(user);
 
         this.userRepository.save(user);
 
@@ -44,6 +46,10 @@ public class UserController {
                 );
     }
 
+    /**
+     * This will validate the {@link User}.
+     * @param user The user to create.
+     */
     private void validate(User user) {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
@@ -54,11 +60,24 @@ public class UserController {
             String message = "";
             for (ConstraintViolation<User> constraintViolation:
                     constraintViolations){
-                message += ", " + constraintViolation.getRootBeanClass().getSimpleName() + " "
+                message += ", " + constraintViolation.getRootBeanClass().getSimpleName() + "."
                         + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage();
             }
 
             throw new UnprocessableEntityException(message);
+        }
+    }
+
+    /**
+     * This will check if {@link User} is unique.
+     * @param user The user to create.
+     */
+    private void exists(User user) {
+        if (this.userRepository.findOneByUserName(user.getUserName()).isPresent()) {
+            throw new UserAlreadyExistsException(user.getUserName());
+        }
+        if (this.userRepository.findOneByEmail(user.getEmail()).isPresent()) {
+            throw new UserAlreadyExistsException(user.getEmail());
         }
     }
 }
