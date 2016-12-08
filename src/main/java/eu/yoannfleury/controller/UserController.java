@@ -86,9 +86,9 @@ public class UserController {
         this.userRepository.save(user);
 
         return this.userRepository.findOneByUserName(user.getUserName())
-                .orElseThrow(() -> new UserNotFoundException(
-                        user.getUserName())
-                );
+            .orElseThrow(() -> new UserNotFoundException(
+                    user.getUserName())
+            );
     }
 
     /**
