@@ -17,7 +17,9 @@ public class NotifCosmoEiServerApplication {
 	public FilterRegistrationBean jwtFilter() {
 		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
 		registrationBean.setFilter(new JwtFilter());
-		registrationBean.addUrlPatterns("/api/*");
+
+		// FireWall
+		registrationBean.addUrlPatterns("/user/role/*");
 
 		return registrationBean;
 	}

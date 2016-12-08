@@ -1,5 +1,6 @@
 package eu.yoannfleury;
 
+import eu.yoannfleury.controller.UserManager;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
@@ -27,7 +28,7 @@ public class JwtFilter extends GenericFilterBean {
         final String token = authHeader.substring(7); // The part after "Bearer "
 
         try {
-            final Claims claims = Jwts.parser().setSigningKey("secretkey") // The same string as in UserManager
+            final Claims claims = Jwts.parser().setSigningKey(UserManager.SECRET_KEY)
                     .parseClaimsJws(token).getBody();
             request.setAttribute("claims", claims);
         }
