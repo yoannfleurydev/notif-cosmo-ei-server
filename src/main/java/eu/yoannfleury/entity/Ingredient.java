@@ -2,6 +2,7 @@ package eu.yoannfleury.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ public class Ingredient {
     /**
      * The name of the ingredient.
      */
-    @NotNull
+    @NotNull(message = "error.name.notnull")
+    @Size(min = 1, message = "error.name.size")
     @Column(nullable = false, unique = true)
     private String name;
 

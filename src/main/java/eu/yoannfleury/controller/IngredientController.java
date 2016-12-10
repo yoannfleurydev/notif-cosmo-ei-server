@@ -3,17 +3,12 @@ package eu.yoannfleury.controller;
 import eu.yoannfleury.entity.Ingredient;
 import eu.yoannfleury.exception.IngredientAlreadyExistsException;
 import eu.yoannfleury.exception.IngredientNotFoundException;
-import eu.yoannfleury.exception.UnprocessableEntityException;
 import eu.yoannfleury.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Ingredient controller. This controller is made for a simple CRUD on the ingredients.
@@ -43,45 +38,36 @@ public class IngredientController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Ingredient add(@RequestBody Ingredient ingredient) {
-        validate(ingredient);
+    public Ingredient add(@Validated @RequestBody Ingredient ingredient) {
         exists(ingredient);
+
+        // TODO Check if products are valids and if they already exists
 
         this.ingredientRepository.save(ingredient);
 
         return this.ingredientRepository.findOneByName(ingredient.getName())
-                .orElseThrow(() -> new IngredientNotFoundException(
-                        ingredient.getName())
-                );
+            .orElseThrow(() -> new IngredientNotFoundException(
+                    ingredient.getName())
+            );
     }
 
-    /**
-     * This will validate the {@link Ingredient}.
-     * @param ingredient The ingredient to create.
-     */
-    private void validate(Ingredient ingredient) {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<Ingredient>> constraintViolations = validator.validate(ingredient);
-
-        if (constraintViolations.size() > 0) {
-            String message = "";
-            for (ConstraintViolation<Ingredient> constraintViolation:
-                    constraintViolations){
-                message += ", " + constraintViolation.getRootBeanClass().getSimpleName() + "."
-                        + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage();
-            }
-
-            throw new UnprocessableEntityException(message);
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Ingredient update(@PathVariable long id, @Validated @RequestBody Ingredient ingredient) {
+        Ingredient model = this.ingredientRepository.findOne(id);
+        if (model != null) {
+            model.setName(ingredient.getName());
+            model.setProducts(ingredient.getProducts());
+            return this.ingredientRepository.saveAndFlush(model);
         }
+        return null;
     }
 
     /**
      * This will check if {@link Ingredient} is unique.
+     *
      * @param user The user to create.
      */
-    private void exists(Ingredient user) {
+    public void exists(Ingredient user) {
         if (this.ingredientRepository.findOneByName(user.getName()).isPresent()) {
             throw new IngredientAlreadyExistsException(user.getName());
         }
