@@ -67,14 +67,21 @@ public class IngredientService {
      * @return The ingredient that matches with the parameter index, with the new values.
      */
     public Ingredient update(long id, Ingredient ingredient) {
-        if (this.ingredientRepository.findOne(id) == null) {
+        Ingredient entity = this.ingredientRepository.findOne(id);
+        if (entity == null) {
             throw new IngredientNotFoundException(id);
         }
 
-        return this.ingredientRepository.saveAndFlush(ingredient);
+        entity.setName(ingredient.getName());
+        entity.setProducts(ingredient.getProducts());
+
+        return this.ingredientRepository.saveAndFlush(entity);
     }
 
     public void delete(long id) {
+        if (this.ingredientRepository.findOne(id) == null) {
+            throw new IngredientNotFoundException(id);
+        }
         this.ingredientRepository.delete(id);
     }
 
