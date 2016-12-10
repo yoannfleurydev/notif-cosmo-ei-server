@@ -2,6 +2,9 @@
 
 ## Technologies
 
+Utilisation des technologies suivantes :
+
+* Java 8
 * Spring Boot
 * Angular
 
