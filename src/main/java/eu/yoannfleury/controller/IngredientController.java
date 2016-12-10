@@ -1,9 +1,8 @@
 package eu.yoannfleury.controller;
 
 import eu.yoannfleury.entity.Ingredient;
-import eu.yoannfleury.exception.IngredientAlreadyExistsException;
 import eu.yoannfleury.exception.IngredientNotFoundException;
-import eu.yoannfleury.repository.IngredientRepository;
+import eu.yoannfleury.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,60 +15,38 @@ import java.util.List;
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
-    private final IngredientRepository ingredientRepository;
+    private final IngredientService ingredientService;
 
     @Autowired
-    public IngredientController(IngredientRepository ingredientRepository) {
-        this.ingredientRepository = ingredientRepository;
+    public IngredientController(IngredientService ingredientService) {
+        this.ingredientService = ingredientService;
     }
 
     @RequestMapping
     public List<Ingredient> ingredients() {
-        return this.ingredientRepository.findAll();
+        return this.ingredientService.getAll();
     }
 
     @RequestMapping("/{id}")
-    public Ingredient user(@PathVariable long id) {
-        if (this.ingredientRepository.findOne(id) == null) {
-            throw new IngredientNotFoundException(Long.toString(id));
-        }
+    public Ingredient read(@PathVariable long id) {
+        return this.ingredientService.get(id);
+    }
 
-        return this.ingredientRepository.findOne(id);
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable long id) {
+        this.ingredientService.delete(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Ingredient add(@Validated @RequestBody Ingredient ingredient) {
-        exists(ingredient);
+    public Ingredient create(@Validated @RequestBody Ingredient ingredient) {
+        this.ingredientService.exists(ingredient);
 
         // TODO Check if products are valids and if they already exists
-
-        this.ingredientRepository.save(ingredient);
-
-        return this.ingredientRepository.findOneByName(ingredient.getName())
-            .orElseThrow(() -> new IngredientNotFoundException(
-                    ingredient.getName())
-            );
+        return this.ingredientService.create(ingredient);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Ingredient update(@PathVariable long id, @Validated @RequestBody Ingredient ingredient) {
-        Ingredient model = this.ingredientRepository.findOne(id);
-        if (model != null) {
-            model.setName(ingredient.getName());
-            model.setProducts(ingredient.getProducts());
-            return this.ingredientRepository.saveAndFlush(model);
-        }
-        return null;
-    }
-
-    /**
-     * This will check if {@link Ingredient} is unique.
-     *
-     * @param user The user to create.
-     */
-    public void exists(Ingredient user) {
-        if (this.ingredientRepository.findOneByName(user.getName()).isPresent()) {
-            throw new IngredientAlreadyExistsException(user.getName());
-        }
+        return this.ingredientService.update(id, ingredient);
     }
 }
