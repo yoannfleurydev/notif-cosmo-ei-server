@@ -49,6 +49,14 @@ public class Product {
         return name;
     }
 
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
