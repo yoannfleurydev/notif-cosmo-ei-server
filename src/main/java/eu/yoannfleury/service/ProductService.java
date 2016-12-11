@@ -51,11 +51,12 @@ public class ProductService {
      * @return The product that matches with the index parameter.
      */
     public ProductDTO get(long id) {
-        if (this.productRepository.findOne(id) == null) {
+        Product p = this.productRepository.findOne(id);
+        if (p == null) {
             throw new ProductNotFoundException(Long.toString(id));
         }
 
-        return this.productMapper.entityToDTO(this.productRepository.findOne(id));
+        return this.productMapper.entityToDTO(p);
     }
 
     /**
@@ -104,7 +105,8 @@ public class ProductService {
         }
 
         return this.productMapper.entityToDTO(
-                this.productRepository.saveAndFlush(entity));
+                this.productRepository.saveAndFlush(entity)
+        );
     }
 
     public void delete(long id) {
