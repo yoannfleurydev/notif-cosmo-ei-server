@@ -44,11 +44,16 @@ Utilisation des technologies suivantes :
 **GET /products/{id}** : retourne l'élément d'index `id`.
 
 **POST /products** : crée un produit en base de données et le retourne si tout 
-se passe bien.
+se passe bien. Il est possible de passer en même temps des index d'ingrédients 
+existant déjà en base de données. Si un index d'ingrédient n'existe pas, l'ajout
+du produit sera annulé.
 
 ```json
 {
-  "name" : "Name"
+	"name" : "Name",
+	"ingredients" : [
+		1
+	]
 }
 ```
 **PUT /products/{id}** : met à jour le produit d'index `id` et le retourne si 
