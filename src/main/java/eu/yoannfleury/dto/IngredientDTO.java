@@ -21,6 +21,9 @@ public class IngredientDTO {
 
     private List<Product> products;
 
+    public IngredientDTO() {
+    }
+
     public IngredientDTO(long id, String name) {
         this.id = id;
         this.name = name;
@@ -28,6 +31,7 @@ public class IngredientDTO {
 
     /**
      * Getter for the index of the ingredient.
+     *
      * @return The index of the ingredient.
      */
     public long getId() {
@@ -36,6 +40,7 @@ public class IngredientDTO {
 
     /**
      * Setter for the index of the ingredient.
+     *
      * @param id The index of the ingredient.
      */
     public void setId(long id) {
@@ -44,6 +49,7 @@ public class IngredientDTO {
 
     /**
      * Getter for the name of the ingredient.
+     *
      * @return The name of the ingredient.
      */
     public String getName() {
@@ -52,6 +58,7 @@ public class IngredientDTO {
 
     /**
      * Setter for the name of the ingredient.
+     *
      * @param name The name of the ingredient.
      */
     public void setName(String name) {
@@ -60,8 +67,9 @@ public class IngredientDTO {
 
     /**
      * Getter for all the products in which the ingredient is.
-     * @see Product
+     *
      * @return A list of products.
+     * @see Product
      */
     public List<Product> getProducts() {
         return products;
@@ -69,6 +77,7 @@ public class IngredientDTO {
 
     /**
      * Setter for all the products in which the ingredient is.
+     *
      * @param products The list of products where the ingredient is.
      */
     public void setProducts(List<Product> products) {

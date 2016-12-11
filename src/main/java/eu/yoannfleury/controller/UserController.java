@@ -28,6 +28,7 @@ public class UserController {
 
     /**
      * Controller constructor.
+     *
      * @param userRepository The user repository to interact with data.
      */
     @Autowired
@@ -39,7 +40,7 @@ public class UserController {
      * <pre>
      *     <code>GET /users</code>
      * </pre>
-     *
+     * <p>
      * Use this route to get all the users stored in the database.
      *
      * @return All the users stored in the database.
@@ -53,7 +54,7 @@ public class UserController {
      * <pre>
      *     <code>GET /users/{id}</code>
      * </pre>
-     *
+     * <p>
      * Use this route to get the user with the id.
      *
      * @param id Long to identify the user you want to get.
@@ -72,7 +73,7 @@ public class UserController {
      * <pre>
      *     <code>POST /users</code>
      * </pre>
-     *
+     * <p>
      * Use this route to create a new user.
      *
      * @param user The user to create.
@@ -86,13 +87,14 @@ public class UserController {
         this.userRepository.save(user);
 
         return this.userRepository.findOneByUserName(user.getUserName())
-            .orElseThrow(() -> new UserNotFoundException(
-                    user.getUserName())
-            );
+                .orElseThrow(() -> new UserNotFoundException(
+                        user.getUserName())
+                );
     }
 
     /**
      * This will validate the {@link User}.
+     *
      * @param user The user to create.
      */
     private void validate(User user) {
@@ -103,8 +105,8 @@ public class UserController {
 
         if (constraintViolations.size() > 0) {
             String message = "";
-            for (ConstraintViolation<User> constraintViolation:
-                    constraintViolations){
+            for (ConstraintViolation<User> constraintViolation :
+                    constraintViolations) {
                 message += ", " + constraintViolation.getRootBeanClass().getSimpleName() + "."
                         + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage();
             }
@@ -115,6 +117,7 @@ public class UserController {
 
     /**
      * This will check if {@link User} is unique.
+     *
      * @param user The user to create.
      */
     private void exists(User user) {

@@ -1,7 +1,6 @@
 package eu.yoannfleury.controller;
 
-import eu.yoannfleury.entity.Ingredient;
-import eu.yoannfleury.exception.IngredientNotFoundException;
+import eu.yoannfleury.dto.IngredientDTO;
 import eu.yoannfleury.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,24 +23,24 @@ public class IngredientController {
     }
 
     @RequestMapping
-    public List<Ingredient> ingredients() {
+    public List<IngredientDTO> ingredients() {
         return this.ingredientService.getAll();
     }
 
     @RequestMapping("/{id}")
-    public Ingredient read(@PathVariable long id) {
+    public IngredientDTO read(@PathVariable long id) {
         return this.ingredientService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Ingredient create(@Validated @RequestBody Ingredient ingredient) {
+    public IngredientDTO create(@Validated @RequestBody IngredientDTO ingredient) {
         this.ingredientService.exists(ingredient);
 
         return this.ingredientService.create(ingredient);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Ingredient update(@PathVariable long id, @Validated @RequestBody Ingredient ingredient) {
+    public IngredientDTO update(@PathVariable long id, @Validated @RequestBody IngredientDTO ingredient) {
         return this.ingredientService.update(id, ingredient);
     }
 

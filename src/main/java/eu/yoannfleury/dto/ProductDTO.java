@@ -1,8 +1,5 @@
 package eu.yoannfleury.dto;
 
-import eu.yoannfleury.entity.Ingredient;
-import eu.yoannfleury.entity.Product;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -23,12 +20,12 @@ public class ProductDTO {
      */
     private List<Long> ingredients;
 
-    public ProductDTO() {}
+    public ProductDTO() {
+    }
 
     /**
-     *
-     * @param id The index of the product
-     * @param name The name of the product
+     * @param id          The index of the product
+     * @param name        The name of the product
      * @param ingredients The list of ingredients of the product.
      */
     public ProductDTO(long id, String name, List<Long> ingredients) {

@@ -19,6 +19,7 @@ public enum Role {
 
     /**
      * Role constructor
+     *
      * @param weight The weight of the role.
      */
     Role(float weight) {
@@ -27,6 +28,7 @@ public enum Role {
 
     /**
      * Weight getter.
+     *
      * @return The weight of the role.
      */
     public float getWeight() {
@@ -35,6 +37,7 @@ public enum Role {
 
     /**
      * Weight setter.
+     *
      * @param weight The weight of the role.
      */
     public void setWeight(float weight) {

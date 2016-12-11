@@ -1,8 +1,10 @@
 package eu.yoannfleury.service;
 
+import eu.yoannfleury.dto.IngredientDTO;
 import eu.yoannfleury.entity.Ingredient;
 import eu.yoannfleury.exception.IngredientAlreadyExistsException;
 import eu.yoannfleury.exception.IngredientNotFoundException;
+import eu.yoannfleury.mapper.IngredientMapper;
 import eu.yoannfleury.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,58 +18,69 @@ public class IngredientService {
      */
     private final IngredientRepository ingredientRepository;
 
+    private final IngredientMapper ingredientMapper;
+
     /**
      * Constructor for {@link IngredientService}.
+     *
      * @param ingredientRepository The {@link Ingredient} entity repository.
      */
     @Autowired
-    public IngredientService(IngredientRepository ingredientRepository) {
+    public IngredientService(IngredientRepository ingredientRepository,
+                             IngredientMapper ingredientMapper) {
         this.ingredientRepository = ingredientRepository;
+        this.ingredientMapper = ingredientMapper;
     }
 
     /**
      * Get one ingredient based on the index parameter.
+     *
      * @param id The index of the {@link Ingredient} to fetch.
      * @return The ingredient that matches with the index parameter.
      */
-    public Ingredient get(long id) {
-        if (this.ingredientRepository.findOne(id) == null) {
+    public IngredientDTO get(long id) {
+        Ingredient ingredient = this.ingredientRepository.findOne(id);
+        if (ingredient == null) {
             throw new IngredientNotFoundException(Long.toString(id));
         }
 
-        return this.ingredientRepository.findOne(id);
+        return this.ingredientMapper.entityToDTO(ingredient);
     }
 
     /**
-     *
      * @return The list of all the ingredients
      */
-    public List<Ingredient> getAll() {
-        return this.ingredientRepository.findAll();
+    public List<IngredientDTO> getAll() {
+        return this.ingredientMapper.entityListToDTOList(
+                this.ingredientRepository.findAll()
+        );
     }
 
     /**
-     *
      * @param ingredient The ingredient to create.
      * @return The ingredient newly created
      */
-    public Ingredient create(Ingredient ingredient) {
-        this.ingredientRepository.save(ingredient);
+    public IngredientDTO create(IngredientDTO ingredient) {
+        this.ingredientRepository.save(
+                this.ingredientMapper.DTOToEntity(ingredient)
+        );
 
-        return this.ingredientRepository.findOneByName(ingredient.getName())
-            .orElseThrow(() -> new IngredientNotFoundException(
-                    ingredient.getName())
-            );
+        Ingredient i = this.ingredientRepository.findOneByName(ingredient.getName())
+                .orElseThrow(() -> new IngredientNotFoundException(
+                        ingredient.getName())
+                );
+
+        return this.ingredientMapper.entityToDTO(i);
     }
 
     /**
-     *
-     * @param id The index of the ingredient you want to create.
+     * @param id         The index of the ingredient you want to create.
      * @param ingredient The model with the new data.
      * @return The ingredient that matches with the parameter index, with the new values.
      */
-    public Ingredient update(long id, Ingredient ingredient) {
+    public IngredientDTO update(long id, IngredientDTO ingredient) {
         Ingredient entity = this.ingredientRepository.findOne(id);
+
         if (entity == null) {
             throw new IngredientNotFoundException(id);
         }
@@ -75,7 +88,9 @@ public class IngredientService {
         entity.setName(ingredient.getName());
         entity.setProducts(ingredient.getProducts());
 
-        return this.ingredientRepository.saveAndFlush(entity);
+        return this.ingredientMapper.entityToDTO(
+                this.ingredientRepository.saveAndFlush(entity)
+        );
     }
 
     public void delete(long id) {
@@ -86,11 +101,11 @@ public class IngredientService {
     }
 
     /**
-     * This will check if {@link Ingredient} is unique.
+     * This will check if the {@link Ingredient} is unique.
      *
      * @param ingredient The user to create.
      */
-    public void exists(Ingredient ingredient) {
+    public void exists(IngredientDTO ingredient) {
         if (this.ingredientRepository.findOneByName(ingredient.getName()).isPresent()) {
             throw new IngredientAlreadyExistsException(ingredient.getName());
         }

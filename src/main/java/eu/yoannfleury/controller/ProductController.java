@@ -1,7 +1,6 @@
 package eu.yoannfleury.controller;
 
 import eu.yoannfleury.dto.ProductDTO;
-import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

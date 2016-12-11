@@ -10,7 +10,10 @@ import eu.yoannfleury.security.Password;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -74,6 +77,7 @@ public class UserManager {
 
     /**
      * This will validate the {@link User}.
+     *
      * @param user The user to create.
      */
     private void validate(User user) {
@@ -84,8 +88,8 @@ public class UserManager {
 
         if (constraintViolations.size() > 0) {
             String message = "";
-            for (ConstraintViolation<User> constraintViolation:
-                    constraintViolations){
+            for (ConstraintViolation<User> constraintViolation :
+                    constraintViolations) {
                 message += ", " + constraintViolation.getRootBeanClass().getSimpleName() + "."
                         + constraintViolation.getPropertyPath() + " " + constraintViolation.getMessage();
             }
@@ -96,6 +100,7 @@ public class UserManager {
 
     /**
      * This will check if {@link User} is unique.
+     *
      * @param user The user to create.
      */
     private void exists(User user) {

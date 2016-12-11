@@ -12,7 +12,7 @@ public class RESTSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                    .disable();
+                .disable();
 //                .authorizeRequests()
 //                    .antMatchers("/users").permitAll()
 //                    .anyRequest().authenticated()

@@ -32,6 +32,7 @@ public class ProductService {
 
     /**
      * Constructor for {@link IngredientService}.
+     *
      * @param productRepository The {@link Product} entity repository.
      */
     @Autowired
@@ -45,6 +46,7 @@ public class ProductService {
 
     /**
      * Get one product based on the index parameter.
+     *
      * @param id The index of the {@link Product} to fetch.
      * @return The product that matches with the index parameter.
      */
@@ -57,15 +59,13 @@ public class ProductService {
     }
 
     /**
-     *
      * @return The list of all the ingredients
      */
     public List<ProductDTO> getAll() {
-        return  this.productMapper.entityListToDTOList(this.productRepository.findAll());
+        return this.productMapper.entityListToDTOList(this.productRepository.findAll());
     }
 
     /**
-     *
      * @param product The product to create.
      * @return The product newly created
      */
@@ -81,13 +81,13 @@ public class ProductService {
     }
 
     /**
-     *
-     * @param id The index of the product you want to create.
+     * @param id      The index of the product you want to create.
      * @param product The model with the new data.
      * @return The product that matches with the parameter index, with the new values.
      */
     public ProductDTO update(long id, ProductDTO product) {
         Product entity = this.productRepository.findOne(id);
+
         if (entity == null) {
             throw new ProductNotFoundException(id);
         }
@@ -97,11 +97,14 @@ public class ProductService {
         if (product.getIngredients() != null) {
             for (Long ingredientId :
                     product.getIngredients()) {
-                entity.addIngredient(this.ingredientRepository.findOne(ingredientId));
+                entity.addIngredient(
+                        this.ingredientRepository.findOne(ingredientId)
+                );
             }
         }
 
-        return this.productMapper.entityToDTO(this.productRepository.saveAndFlush(entity));
+        return this.productMapper.entityToDTO(
+                this.productRepository.saveAndFlush(entity));
     }
 
     public void delete(long id) {

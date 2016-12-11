@@ -31,10 +31,14 @@ public class Ingredient {
     /**
      * Default constructor of the ingredient.
      */
-    public Ingredient(){};
+    public Ingredient() {
+    }
+
+    ;
 
     /**
      * Constructor of ingredient.
+     *
      * @param name The name of the ingredient.
      */
     public Ingredient(String name) {
@@ -43,6 +47,7 @@ public class Ingredient {
 
     /**
      * Getter for the index of the ingredient.
+     *
      * @return The index of the ingredient.
      */
     public long getId() {
@@ -51,6 +56,7 @@ public class Ingredient {
 
     /**
      * Setter for the index of the ingredient.
+     *
      * @param id The index of the ingredient.
      */
     public void setId(long id) {
@@ -59,6 +65,7 @@ public class Ingredient {
 
     /**
      * Getter for the name of the ingredient.
+     *
      * @return The name of the ingredient.
      */
     public String getName() {
@@ -67,6 +74,7 @@ public class Ingredient {
 
     /**
      * Setter for the name of the ingredient.
+     *
      * @param name The name of the ingredient.
      */
     public void setName(String name) {
@@ -75,8 +83,9 @@ public class Ingredient {
 
     /**
      * Getter for all the products in which the ingredient is.
-     * @see Product
+     *
      * @return A list of products.
+     * @see Product
      */
     public List<Product> getProducts() {
         return products;
@@ -84,6 +93,7 @@ public class Ingredient {
 
     /**
      * Setter for all the products in which the ingredient is.
+     *
      * @param products The list of products where the ingredient is.
      */
     public void setProducts(List<Product> products) {

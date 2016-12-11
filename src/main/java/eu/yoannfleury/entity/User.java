@@ -63,15 +63,16 @@ public class User {
     /**
      * Default constructor.
      */
-    public User() {}
+    public User() {
+    }
 
     /**
-     * @param id The index of the user.
-     * @param userName The user name of the user.
+     * @param id        The index of the user.
+     * @param userName  The user name of the user.
      * @param firstName The first name of the user.
-     * @param lastName The last name of the user.
-     * @param email The email of the user.
-     * @param role The {@link Role} of the user.
+     * @param lastName  The last name of the user.
+     * @param email     The email of the user.
+     * @param role      The {@link Role} of the user.
      */
     public User(long id, String userName, String firstName, String lastName,
                 String email, Role role) {

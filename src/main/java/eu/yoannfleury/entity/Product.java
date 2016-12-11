@@ -31,7 +31,8 @@ public class Product {
     /**
      * Default constructor
      */
-    public Product(){}
+    public Product() {
+    }
 
     public Product(String name, List<Ingredient> ingredients) {
         this.name = name;
