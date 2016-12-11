@@ -66,3 +66,29 @@ tout se passe bien.
 ```
 
 **DELETE /products/{id}** : supprime le produit d'index `id`.
+
+### Ingrédients
+
+**GET /ingredients** : retourne tous les ingrédients stockés en base de données.
+
+**GET /ingredients/{id}** : retourne l'ingrédients d'index `id`.
+
+**POST /ingredients** : crée un ingrédient en base de données et le retoune si 
+tout se passe bien. 
+
+```json
+{
+    "name": "Aqua"
+}
+```
+
+**PUT /ingredients/{id}** : met à jour l'ingrédient d'index `id` et le retourne
+si tout se passe bien.
+
+```json
+{
+    "name": "Aqua"
+}
+```
+
+**DELETE /ingredients/{id}** : supprime l'ingrédient d'index `id`.
