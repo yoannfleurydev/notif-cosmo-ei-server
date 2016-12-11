@@ -1,11 +1,15 @@
 package eu.yoannfleury.service;
 
+import eu.yoannfleury.dto.ProductDTO;
+import eu.yoannfleury.entity.Ingredient;
+import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.exception.ProductAlreadyExistsException;
 import eu.yoannfleury.exception.ProductNotFoundException;
+import eu.yoannfleury.mapper.ProductMapper;
+import eu.yoannfleury.repository.IngredientRepository;
 import eu.yoannfleury.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import eu.yoannfleury.entity.Product;
 
 import java.util.List;
 
@@ -17,12 +21,26 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     /**
+     * The {@link Ingredient} repository.
+     */
+    private final IngredientRepository ingredientRepository;
+
+    /**
+     * The {@link Product} mapper.
+     */
+    private final ProductMapper productMapper;
+
+    /**
      * Constructor for {@link IngredientService}.
      * @param productRepository The {@link Product} entity repository.
      */
     @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository,
+                          IngredientRepository ingredientRepository,
+                          ProductMapper productMapper) {
         this.productRepository = productRepository;
+        this.ingredientRepository = ingredientRepository;
+        this.productMapper = productMapper;
     }
 
     /**
@@ -30,20 +48,20 @@ public class ProductService {
      * @param id The index of the {@link Product} to fetch.
      * @return The product that matches with the index parameter.
      */
-    public Product get(long id) {
+    public ProductDTO get(long id) {
         if (this.productRepository.findOne(id) == null) {
             throw new ProductNotFoundException(Long.toString(id));
         }
 
-        return this.productRepository.findOne(id);
+        return this.productMapper.entityToDTO(this.productRepository.findOne(id));
     }
 
     /**
      *
      * @return The list of all the ingredients
      */
-    public List<Product> getAll() {
-        return this.productRepository.findAll();
+    public List<ProductDTO> getAll() {
+        return  this.productMapper.entityListToDTOList(this.productRepository.findAll());
     }
 
     /**
@@ -51,13 +69,15 @@ public class ProductService {
      * @param product The product to create.
      * @return The product newly created
      */
-    public Product create(Product product) {
-        this.productRepository.save(product);
+    public ProductDTO create(ProductDTO product) {
+        this.productRepository.save(this.productMapper.DTOToEntity(product));
 
-        return this.productRepository.findOneByName(product.getName())
+        Product p = this.productRepository.findOneByName(product.getName())
                 .orElseThrow(() -> new ProductNotFoundException(
                         product.getName())
                 );
+
+        return this.productMapper.entityToDTO(p);
     }
 
     /**
@@ -66,16 +86,22 @@ public class ProductService {
      * @param product The model with the new data.
      * @return The product that matches with the parameter index, with the new values.
      */
-    public Product update(long id, Product product) {
+    public ProductDTO update(long id, ProductDTO product) {
         Product entity = this.productRepository.findOne(id);
         if (entity == null) {
             throw new ProductNotFoundException(id);
         }
 
         entity.setName(product.getName());
-        entity.setIngredients(product.getIngredients());
 
-        return this.productRepository.saveAndFlush(entity);
+        if (product.getIngredients() != null) {
+            for (Long ingredientId :
+                    product.getIngredients()) {
+                entity.addIngredient(this.ingredientRepository.findOne(ingredientId));
+            }
+        }
+
+        return this.productMapper.entityToDTO(this.productRepository.saveAndFlush(entity));
     }
 
     public void delete(long id) {
@@ -90,7 +116,7 @@ public class ProductService {
      *
      * @param product The user to create.
      */
-    public void exists(Product product) {
+    public void exists(ProductDTO product) {
         if (this.productRepository.findOneByName(product.getName()).isPresent()) {
             throw new ProductAlreadyExistsException(product.getName());
         }

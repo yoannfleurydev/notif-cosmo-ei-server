@@ -1,5 +1,6 @@
 package eu.yoannfleury.controller;
 
+import eu.yoannfleury.dto.ProductDTO;
 import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +22,24 @@ public class ProductController {
     }
 
     @RequestMapping
-    public List<Product> products() {
+    public List<ProductDTO> products() {
         return this.productService.getAll();
     }
 
     @RequestMapping("/{id}")
-    public Product read(@PathVariable long id) {
+    public ProductDTO read(@PathVariable long id) {
         return this.productService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Product create(@Validated @RequestBody Product product) {
+    public ProductDTO create(@Validated @RequestBody ProductDTO product) {
         this.productService.exists(product);
 
         return this.productService.create(product);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Product update(@PathVariable long id, @Validated @RequestBody Product product) {
+    public ProductDTO update(@PathVariable long id, @Validated @RequestBody ProductDTO product) {
         return this.productService.update(id, product);
     }
 

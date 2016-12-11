@@ -33,8 +33,9 @@ public class Product {
      */
     public Product(){}
 
-    public Product(String name) {
+    public Product(String name, List<Ingredient> ingredients) {
         this.name = name;
+        this.ingredients = ingredients;
     }
 
     public long getId() {
@@ -49,6 +50,10 @@ public class Product {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -57,7 +62,7 @@ public class Product {
         this.ingredients = ingredients;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void addIngredient(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
     }
 }
