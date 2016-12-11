@@ -37,7 +37,6 @@ public class IngredientController {
     public Ingredient create(@Validated @RequestBody Ingredient ingredient) {
         this.ingredientService.exists(ingredient);
 
-        // TODO Check if products are valids and if they already exists
         return this.ingredientService.create(ingredient);
     }
 

@@ -11,3 +11,53 @@ Utilisation des technologies suivantes :
 ## API
 
 * https://geo.api.gouv.fr
+
+## Routes
+
+### Inscription et connexion
+
+**POST /user/signup**
+
+```json
+{
+    "userName" : "yoannfleurydev",
+    "email" : "yoann.fleury@example.com",
+    "firstName" : "Yoann",
+    "lastName" : "Fleury",
+    "password" : "azerty",
+    "role" : "USER"
+}
+```
+
+**POST /user/login**
+```json
+{
+    "name" : "yoannfleurydev",
+    "password" : "azerty"
+}
+```
+
+### Produits
+
+**GET /products** : retourne tous les produits disponible en base de données.
+
+**GET /products/{id}** : retourne l'élément d'index `id`.
+
+**POST /products** : crée un produit en base de données et le retourne si tout 
+se passe bien.
+
+```json
+{
+  "name" : "Name"
+}
+```
+**PUT /products/{id}** : met à jour le produit d'index `id` et le retourne si 
+tout se passe bien.
+
+```json
+{
+	"name": "Name"
+}
+```
+
+**DELETE /products/{id}** : supprime le produit d'index `id`.
