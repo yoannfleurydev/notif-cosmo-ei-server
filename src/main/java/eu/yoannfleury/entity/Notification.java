@@ -1,9 +1,7 @@
 package eu.yoannfleury.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Notification entity
@@ -23,4 +21,10 @@ public class Notification {
      */
     // https://geo.api.gouv.fr/regions
     private long code;
+
+    @ManyToMany
+    private List<Effect> effects;
+
+    @ManyToMany
+    private List<Product> products;
 }

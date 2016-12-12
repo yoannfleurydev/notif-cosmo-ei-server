@@ -3,6 +3,7 @@ package eu.yoannfleury.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Effect {
@@ -18,6 +19,9 @@ public class Effect {
     @NotNull
     @Column(nullable = false)
     private Level level;
+
+    @ManyToMany(mappedBy = "effects")
+    private List<Notification> notifications;
 
     public Effect() {}
 
@@ -48,5 +52,17 @@ public class Effect {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public void addNotification(Notification notification) {
+        this.notifications.add(notification);
     }
 }

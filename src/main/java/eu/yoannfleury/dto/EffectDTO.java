@@ -1,6 +1,5 @@
 package eu.yoannfleury.dto;
 
-import eu.yoannfleury.entity.Effect;
 import eu.yoannfleury.entity.Level;
 
 import javax.validation.constraints.NotNull;

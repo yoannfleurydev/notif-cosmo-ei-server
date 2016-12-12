@@ -1,5 +1,7 @@
 package eu.yoannfleury.entity;
 
+import org.aspectj.weaver.ast.Not;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -27,6 +29,9 @@ public class Product {
 
     @ManyToMany
     private List<Ingredient> ingredients;
+
+    @ManyToMany(mappedBy = "products")
+    private List<Notification> notifications;
 
     /**
      * Default constructor
