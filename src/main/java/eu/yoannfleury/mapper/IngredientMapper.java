@@ -5,6 +5,7 @@ import eu.yoannfleury.entity.Ingredient;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -21,7 +22,7 @@ public class IngredientMapper {
     }
 
     public List<IngredientDTO> entityListToDTOList(List<Ingredient> entities) {
-        List<IngredientDTO> list = new ArrayList<>();
+        List<IngredientDTO> list = new LinkedList<>();
 
         for (Ingredient entity :
                 entities) {

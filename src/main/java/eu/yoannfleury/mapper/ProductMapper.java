@@ -8,6 +8,7 @@ import eu.yoannfleury.repository.IngredientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -19,7 +20,7 @@ public class ProductMapper {
     }
 
     public ProductDTO entityToDTO(Product entity) {
-        List<Long> ingredients = new ArrayList<>();
+        List<Long> ingredients = new LinkedList<>();
 
         for (Ingredient ingredient :
                 entity.getIngredients()) {
@@ -34,7 +35,7 @@ public class ProductMapper {
     }
 
     public Product DTOToEntity(ProductDTO dto) {
-        List<Ingredient> ingredients = new ArrayList<>();
+        List<Ingredient> ingredients = new LinkedList<>();
 
         for (Long id :
                 dto.getIngredients()) {
@@ -48,7 +49,7 @@ public class ProductMapper {
     }
 
     public List<ProductDTO> entityListToDTOList(List<Product> entities) {
-        List<ProductDTO> list = new ArrayList<>();
+        List<ProductDTO> list = new LinkedList<>();
 
         for (Product entity :
                 entities) {
