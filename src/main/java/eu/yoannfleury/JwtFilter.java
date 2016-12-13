@@ -14,6 +14,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/**
+ * Use this class to filter requests.
+ * At the moment, this class filter all http requests except GET.
+ * You should have an Authorization http header with Bearer and the token as a
+ * value to pass this filter.
+ */
 public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(final ServletRequest req,
