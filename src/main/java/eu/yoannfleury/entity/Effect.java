@@ -22,7 +22,9 @@ public class Effect {
     @ManyToMany(mappedBy = "effects")
     private List<Notification> notifications;
 
-    public Effect() {}
+    public Effect() {
+        this.level = Level.UNKNOWN;
+    }
 
     public Effect(String description, Level level) {
         this.description = description;

@@ -1,6 +1,7 @@
 package eu.yoannfleury.controller;
 
 import eu.yoannfleury.dto.IngredientDTO;
+import eu.yoannfleury.entity.Ingredient;
 import eu.yoannfleury.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,17 @@ public class IngredientController {
         return this.ingredientService.getAll();
     }
 
+    @RequestMapping("/search")
+    public List<IngredientDTO> search(
+            @RequestParam(value = "value", defaultValue = "") String value) {
+        return this.ingredientService.search(value);
+    }
+
     @RequestMapping("/{id}")
     public IngredientDTO read(@PathVariable long id) {
         return this.ingredientService.get(id);
     }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public IngredientDTO create(@Validated @RequestBody IngredientDTO ingredient) {

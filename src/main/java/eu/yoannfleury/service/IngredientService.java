@@ -63,6 +63,12 @@ public class IngredientService {
         );
     }
 
+    public List<IngredientDTO> search(String pattern) {
+        return this.ingredientMapper.entityListToDTOList(
+                this.ingredientRepository.findWithPattern("%" + pattern + "%")
+        );
+    }
+
     /**
      * @param ingredient The ingredient to create.
      * @return The ingredient newly created

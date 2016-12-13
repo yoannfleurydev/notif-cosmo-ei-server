@@ -12,10 +12,10 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-@EnableAutoConfiguration
 @ComponentScan
 @Configuration
 @SpringBootApplication
+@EnableAutoConfiguration
 public class NotifCosmoEiServerApplication {
     @Bean
     public FilterRegistrationBean jwtFilter() {
