@@ -15,5 +15,5 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long> {
     public Optional<Ingredient> findOneByName(String name);
 
     @Query(value = "SELECT ing FROM Ingredient ing WHERE ing.name LIKE :pattern")
-    public List<Ingredient> findWithPattern(@Param("pattern") String pattern);
+    public List<Ingredient> findByPattern(@Param("pattern") String pattern);
 }

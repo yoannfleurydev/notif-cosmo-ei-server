@@ -39,7 +39,6 @@ public class IngredientController {
         return this.ingredientService.get(id);
     }
 
-
     @RequestMapping(method = RequestMethod.POST)
     public IngredientDTO create(@Validated @RequestBody IngredientDTO ingredient) {
         this.ingredientService.exists(ingredient);

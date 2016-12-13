@@ -30,6 +30,11 @@ public class ProductController {
         return this.productService.get(id);
     }
 
+    @RequestMapping("/search")
+    public List<ProductDTO> search(@RequestParam(value = "value", defaultValue = "") String value) {
+        return this.productService.search(value);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ProductDTO create(@Validated @RequestBody ProductDTO product) {
         this.productService.exists(product);

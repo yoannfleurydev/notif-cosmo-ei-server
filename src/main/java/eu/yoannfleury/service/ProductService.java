@@ -66,6 +66,12 @@ public class ProductService {
         return this.productMapper.entityListToDTOList(this.productRepository.findAll());
     }
 
+    public List<ProductDTO> search(String pattern) {
+        return this.productMapper.entityListToDTOList(
+                this.productRepository.findByPattern("%" + pattern + "%")
+        );
+    }
+
     /**
      * @param product The product to create.
      * @return The product newly created

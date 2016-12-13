@@ -65,7 +65,7 @@ public class IngredientService {
 
     public List<IngredientDTO> search(String pattern) {
         return this.ingredientMapper.entityListToDTOList(
-                this.ingredientRepository.findWithPattern("%" + pattern + "%")
+                this.ingredientRepository.findByPattern("%" + pattern + "%")
         );
     }
 
