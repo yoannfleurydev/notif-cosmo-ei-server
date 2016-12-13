@@ -1,6 +1,7 @@
 package eu.yoannfleury.dto;
 
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ProductDTO {
@@ -21,6 +22,7 @@ public class ProductDTO {
     private List<Long> ingredients;
 
     public ProductDTO() {
+        this.ingredients = new LinkedList<>();
     }
 
     /**

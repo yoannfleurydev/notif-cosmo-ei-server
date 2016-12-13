@@ -4,6 +4,7 @@ import org.aspectj.weaver.ast.Not;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,6 +38,7 @@ public class Product {
      * Default constructor
      */
     public Product() {
+        this.ingredients = new LinkedList<>();
     }
 
     public Product(String name, List<Ingredient> ingredients) {

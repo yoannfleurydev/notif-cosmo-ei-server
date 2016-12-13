@@ -12,7 +12,6 @@ public class EffectDTO {
     @Size(min = 1, max = 100, message = "error.description.size")
     private String description;
 
-    @NotNull
     private Level level;
 
     public EffectDTO() {}

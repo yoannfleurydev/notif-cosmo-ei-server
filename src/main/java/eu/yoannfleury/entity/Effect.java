@@ -16,7 +16,6 @@ public class Effect {
     @Column(nullable = false)
     private String description;
 
-    @NotNull
     @Column(nullable = false)
     private Level level;
 
