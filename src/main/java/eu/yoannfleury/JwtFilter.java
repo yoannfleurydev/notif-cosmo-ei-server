@@ -4,6 +4,7 @@ import eu.yoannfleury.controller.UserManager;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -20,19 +21,22 @@ public class JwtFilter extends GenericFilterBean {
                          final FilterChain chain) throws IOException, ServletException {
         final HttpServletRequest request = (HttpServletRequest) req;
 
-        final String authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new ServletException("Missing or invalid Authorization header.");
-        }
+        // Allow all GET requests for non connected users.
+        if (!request.getMethod().equals(HttpMethod.GET.toString())) {
+            final String authHeader = request.getHeader("Authorization");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                throw new ServletException("Missing or invalid Authorization header.");
+            }
 
-        final String token = authHeader.substring(7); // The part after "Bearer "
+            final String token = authHeader.substring(7); // The part after "Bearer "
 
-        try {
-            final Claims claims = Jwts.parser().setSigningKey(UserManager.SECRET_KEY)
-                    .parseClaimsJws(token).getBody();
-            request.setAttribute("claims", claims);
-        } catch (final SignatureException e) {
-            throw new ServletException("Invalid token.");
+            try {
+                final Claims claims = Jwts.parser().setSigningKey(UserManager.SECRET_KEY)
+                        .parseClaimsJws(token).getBody();
+                request.setAttribute("claims", claims);
+            } catch (final SignatureException e) {
+                throw new ServletException("Invalid token.");
+            }
         }
 
         chain.doFilter(req, res);
