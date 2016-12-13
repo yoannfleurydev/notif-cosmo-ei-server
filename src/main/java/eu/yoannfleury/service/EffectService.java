@@ -7,9 +7,11 @@ import eu.yoannfleury.exception.EffectNotFoundException;
 import eu.yoannfleury.mapper.EffectMapper;
 import eu.yoannfleury.repository.EffectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class EffectService {
     private final EffectRepository effectRepository;
 
