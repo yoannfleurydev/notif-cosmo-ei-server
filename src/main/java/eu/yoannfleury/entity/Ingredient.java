@@ -3,6 +3,7 @@ package eu.yoannfleury.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public class Ingredient {
      * Default constructor of the ingredient.
      */
     public Ingredient() {
+        this.products = new LinkedList<>();
     }
 
     ;
@@ -43,6 +45,7 @@ public class Ingredient {
      */
     public Ingredient(String name) {
         this.name = name;
+        this.products = new LinkedList<>();
     }
 
     /**
@@ -98,5 +101,9 @@ public class Ingredient {
      */
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
     }
 }

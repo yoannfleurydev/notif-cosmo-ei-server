@@ -2,13 +2,16 @@ package eu.yoannfleury.service;
 
 import eu.yoannfleury.dto.IngredientDTO;
 import eu.yoannfleury.entity.Ingredient;
+import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.exception.IngredientAlreadyExistsException;
 import eu.yoannfleury.exception.IngredientNotFoundException;
 import eu.yoannfleury.mapper.IngredientMapper;
 import eu.yoannfleury.repository.IngredientRepository;
+import eu.yoannfleury.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -20,6 +23,8 @@ public class IngredientService {
 
     private final IngredientMapper ingredientMapper;
 
+    private final ProductRepository productRepository;
+
     /**
      * Constructor for {@link IngredientService}.
      *
@@ -27,9 +32,11 @@ public class IngredientService {
      */
     @Autowired
     public IngredientService(IngredientRepository ingredientRepository,
-                             IngredientMapper ingredientMapper) {
+                             IngredientMapper ingredientMapper,
+                             ProductRepository productRepository) {
         this.ingredientRepository = ingredientRepository;
         this.ingredientMapper = ingredientMapper;
+        this.productRepository = productRepository;
     }
 
     /**
@@ -86,7 +93,14 @@ public class IngredientService {
         }
 
         entity.setName(ingredient.getName());
-        entity.setProducts(ingredient.getProducts());
+
+        List<Product> products = new LinkedList<>();
+
+        for (Long productId : ingredient.getProducts()) {
+            products.add(this.productRepository.findOne(productId));
+        }
+
+        entity.setProducts(products);
 
         return this.ingredientMapper.entityToDTO(
                 this.ingredientRepository.saveAndFlush(entity)

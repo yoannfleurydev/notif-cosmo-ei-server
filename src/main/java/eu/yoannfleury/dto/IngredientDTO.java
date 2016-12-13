@@ -19,14 +19,15 @@ public class IngredientDTO {
     @Size(min = 1, message = "error.name.size")
     private String name;
 
-    private List<Product> products;
+    private List<Long> products;
 
     public IngredientDTO() {
     }
 
-    public IngredientDTO(long id, String name) {
+    public IngredientDTO(long id, String name, List<Long> products) {
         this.id = id;
         this.name = name;
+        this.products = products;
     }
 
     /**
@@ -71,7 +72,7 @@ public class IngredientDTO {
      * @return A list of products.
      * @see Product
      */
-    public List<Product> getProducts() {
+    public List<Long> getProducts() {
         return products;
     }
 
@@ -80,7 +81,7 @@ public class IngredientDTO {
      *
      * @param products The list of products where the ingredient is.
      */
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<Long> products) {
         this.products = products;
     }
 }
