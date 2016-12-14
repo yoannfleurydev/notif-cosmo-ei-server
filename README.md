@@ -103,3 +103,11 @@ Les recherches sont insensibles à la casse. En voici la liste :
 * Recherche sur le **nom** d'un ingrédient : `GET /ingredients/search?value=recherche`,
 * Recherche sur le **nom** d'un produit : `GET /products/search?value=recherche`
 * Recherche sur la **description** d'un effet : `GET /effect/search?value=recherche`
+
+## TODO
+
+- [] Vérifier le code lors d'un dépôt de notification
+- [] Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
+qui fait le dépôt.
+- [] Faire une route sur le classement des effets les plus reportés
+- [] Faire une route sur le classement des effets les plus lourd
