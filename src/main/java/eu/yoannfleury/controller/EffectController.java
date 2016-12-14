@@ -29,6 +29,13 @@ public class EffectController {
         return this.effectService.get(id);
     }
 
+    @RequestMapping("/search")
+    public List<EffectDTO> search(
+            @RequestParam(value = "value", defaultValue = "") String value) {
+        System.out.println(value);
+        return this.effectService.search(value);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public EffectDTO create(@Validated @RequestBody EffectDTO effect) {
         return this.effectService.create(effect);

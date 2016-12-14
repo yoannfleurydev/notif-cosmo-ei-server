@@ -14,7 +14,9 @@ public class EffectDTO {
 
     private Level level;
 
-    public EffectDTO() {}
+    public EffectDTO() {
+        this.level = Level.UNKNOWN;
+    }
 
     public EffectDTO(long id, String description, Level level) {
         this.id = id;

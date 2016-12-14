@@ -39,6 +39,13 @@ public class EffectService {
         );
     }
 
+    public List<EffectDTO> search(String pattern) {
+        System.out.println(pattern);
+        return this.effectMapper.entityListToDTOList(
+                this.effectRepository.findByPattern("%" + pattern + "%")
+        );
+    }
+
     public EffectDTO create(EffectDTO effect) {
         Effect e = this.effectRepository.save(
                 this.effectMapper.DTOToEntity(effect)
