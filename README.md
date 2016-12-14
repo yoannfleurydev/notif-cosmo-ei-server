@@ -92,3 +92,14 @@ si tout se passe bien.
 ```
 
 **DELETE /ingredients/{id}** : supprime l'ingrédient d'index `id`.
+
+### Recherche
+
+Il est possible de rechercher des termes sur des champs précis des objets. 
+Les recherches sont insensibles à la casse. En voici la liste :
+
+> `recherche` étant le terme à rechercher.
+
+* Recherche sur le **nom** d'un ingrédient : `GET /ingredients/search?value=recherche`,
+* Recherche sur le **nom** d'un produit : `GET /products/search?value=recherche`
+* Recherche sur la **description** d'un effet : `GET /effect/search?value=recherche`
