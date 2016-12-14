@@ -106,8 +106,9 @@ Les recherches sont insensibles à la casse. En voici la liste :
 
 ## TODO
 
-- [] Vérifier le code lors d'un dépôt de notification
-- [] Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
+* [ ] Vérifier le code lors d'un dépôt de notification
+* [ ] Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
 qui fait le dépôt.
-- [] Faire une route sur le classement des effets les plus reportés
-- [] Faire une route sur le classement des effets les plus lourd
+* [ ] Faire une route sur le classement des effets les plus reportés
+* [ ] Faire une route sur le classement des effets les plus lourd
+* [ ] Ajouter le système de page sur les `findAll`
