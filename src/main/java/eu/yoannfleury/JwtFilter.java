@@ -28,7 +28,8 @@ public class JwtFilter extends GenericFilterBean {
         final HttpServletRequest request = (HttpServletRequest) req;
 
         // Allow all GET requests for non connected users.
-        if (!request.getMethod().equals(HttpMethod.GET.toString())) {
+        if (!request.getMethod().equals(HttpMethod.GET.toString()) 
+            && !request.getMethod().equals(HttpMethod.OPTIONS.toString()) {
             final String authHeader = request.getHeader("Authorization");
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 throw new ServletException("Missing or invalid Authorization header.");
