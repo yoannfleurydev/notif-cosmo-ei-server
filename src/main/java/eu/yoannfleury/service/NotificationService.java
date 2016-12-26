@@ -9,6 +9,10 @@ import eu.yoannfleury.repository.EffectRepository;
 import eu.yoannfleury.repository.NotificationRepository;
 import eu.yoannfleury.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,6 +58,16 @@ public class NotificationService {
         return this.notificationMapper.entityListToDTOList(
                 this.notificationRepository.findAll()
         );
+    }
+
+    public List<NotificationDTO> getByPagination(int page, int limit,
+                                            Sort.Direction direction,
+                                            String property) {
+        Pageable pageable = new PageRequest(page, limit, direction, property);
+
+        Page<Notification> ingredientPage = this.notificationRepository.findAll(pageable);
+
+        return this.notificationMapper.entityListToDTOList(ingredientPage.getContent());
     }
 
     /**
