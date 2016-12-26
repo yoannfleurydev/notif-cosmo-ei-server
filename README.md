@@ -139,3 +139,13 @@ est encore mieux, même si il faut perdre un peu de temps pour ça.
 Notre Web Service est protégé par une authentification par JWT (Json Web Token)
 qui assure l'intégrité de la connexion et qui permet de garder un Web Service
 sans état.
+
+## Sécurité
+
+Afin de garantir un maximum la validité des données, nous faisons appel au web 
+service du gouvernement permettant de récupérer les régions françaises.
+
+Pour pouvoir contacter cette API depuis le serveur, il faut que le certificat 
+SSL de l'API en question soit dans les certificats connus par Java. Ce 
+[lien](http://magicmonster.com/kb/prg/java/ssl/pkix_path_building_failed.html) 
+contient la démarche.

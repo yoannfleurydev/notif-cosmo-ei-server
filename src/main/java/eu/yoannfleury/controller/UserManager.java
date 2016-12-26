@@ -6,19 +6,21 @@ import eu.yoannfleury.exception.UserAlreadyExistsException;
 import eu.yoannfleury.exception.UserNotFoundException;
 import eu.yoannfleury.exception.WrongPasswordException;
 import eu.yoannfleury.repository.UserRepository;
+import eu.yoannfleury.security.IJwtUser;
 import eu.yoannfleury.security.Password;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.security.Principal;
 import java.util.Date;
 import java.util.Set;
 
@@ -26,6 +28,7 @@ import java.util.Set;
 @RequestMapping(value = "/user")
 public class UserManager {
     public static final String SECRET_KEY = "notif-cosmo-ei";
+
     private UserRepository userRepository;
 
     @Autowired

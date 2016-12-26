@@ -1,21 +1,29 @@
 package eu.yoannfleury.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.yoannfleury.dto.NotificationDTO;
+import eu.yoannfleury.dto.RegionDTO;
 import eu.yoannfleury.entity.Notification;
-import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.exception.NotificationNotFoundException;
+import eu.yoannfleury.exception.RegionNotFoundException;
 import eu.yoannfleury.mapper.NotificationMapper;
 import eu.yoannfleury.repository.EffectRepository;
 import eu.yoannfleury.repository.NotificationRepository;
 import eu.yoannfleury.repository.ProductRepository;
+import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 @Service
 public class NotificationService {
@@ -75,11 +83,47 @@ public class NotificationService {
      * @return The notification newly created
      */
     public NotificationDTO create(NotificationDTO notification) {
-        Notification n = this.notificationRepository.save(
-                this.notificationMapper.DTOToEntity(notification)
-        );
+        ConnectionSpec spec = new ConnectionSpec.Builder(
+                ConnectionSpec.MODERN_TLS
+        ).build();
 
-        return this.notificationMapper.entityToDTO(n);
+        OkHttpClient client = new OkHttpClient.Builder().connectionSpecs(
+                Collections.singletonList(spec)
+        ).build();
+
+        List<RegionDTO> regions;
+
+        Request request = new Request.Builder()
+                .url("https://geo.api.gouv.fr/regions")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            regions = Arrays.asList(mapper.readValue(response.body().string(), RegionDTO[].class));
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+
+        boolean inArray = false;
+        for (RegionDTO region : regions) {
+            if (region.getCode().equals(notification.getCode())) {
+                inArray = true;
+                break;
+            }
+        }
+
+        if (inArray) {
+            Notification n = this.notificationRepository.save(
+                    this.notificationMapper.DTOToEntity(notification)
+            );
+
+            return this.notificationMapper.entityToDTO(n);
+        } else {
+            throw new RegionNotFoundException(notification.getCode());
+        }
     }
 
     /**

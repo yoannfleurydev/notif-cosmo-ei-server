@@ -1,6 +1,7 @@
 package eu.yoannfleury.controller;
 
 import eu.yoannfleury.dto.NotificationDTO;
+import eu.yoannfleury.security.IJwtUser;
 import eu.yoannfleury.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -15,9 +18,13 @@ import java.util.List;
 public class NotificationController {
     private final NotificationService notificationService;
 
+    private IJwtUser iJwtUser;
+
     @Autowired
-    public NotificationController(NotificationService notificationService) {
+    public NotificationController(NotificationService notificationService,
+                                  IJwtUser iJwtUser) {
         this.notificationService = notificationService;
+        this.iJwtUser = iJwtUser;
     }
 
     @RequestMapping
@@ -36,7 +43,9 @@ public class NotificationController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public NotificationDTO create(@Validated @RequestBody NotificationDTO notification) {
+    public NotificationDTO create(@Validated @RequestBody NotificationDTO notification, HttpServletRequest request) {
+        notification.setDate(new Date());
+        notification.setUser(this.iJwtUser.getUser(request).getId());
         return this.notificationService.create(notification);
     }
 

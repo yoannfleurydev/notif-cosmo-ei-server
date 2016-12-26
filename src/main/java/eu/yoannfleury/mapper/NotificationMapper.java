@@ -6,6 +6,8 @@ import eu.yoannfleury.entity.Notification;
 import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.repository.EffectRepository;
 import eu.yoannfleury.repository.ProductRepository;
+import eu.yoannfleury.repository.UserRepository;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoRestTemplateCustomizer;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,13 +17,15 @@ import java.util.List;
 @Service
 public class NotificationMapper {
     private EffectRepository effectRepository;
-
     private ProductRepository productRepository;
+    private UserRepository userRepository;
 
     public NotificationMapper(EffectRepository effectRepository,
-                              ProductRepository productRepository) {
+                              ProductRepository productRepository,
+                              UserRepository userRepository) {
         this.effectRepository = effectRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     public NotificationDTO entityToDTO(Notification entity) {
@@ -40,7 +44,9 @@ public class NotificationMapper {
 
         return new NotificationDTO(
                 entity.getId(),
+                entity.getUser().getId(),
                 entity.getCode(),
+                entity.getDate(),
                 effects,
                 products
         );
@@ -62,6 +68,8 @@ public class NotificationMapper {
 
         return new Notification(
                 dto.getCode(),
+                this.userRepository.findOne(dto.getUser()),
+                dto.getDate(),
                 effects,
                 products
         );
