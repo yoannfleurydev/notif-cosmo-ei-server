@@ -4,6 +4,8 @@ import eu.yoannfleury.dto.IngredientDTO;
 import eu.yoannfleury.entity.Ingredient;
 import eu.yoannfleury.service.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +26,13 @@ public class IngredientController {
     }
 
     @RequestMapping
-    public List<IngredientDTO> ingredients() {
-        return this.ingredientService.getAll();
+    public List<IngredientDTO> ingredients(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "limit", defaultValue = "20") int limit,
+            @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
+            @RequestParam(value = "property", defaultValue = "id") String property
+    ) {
+        return this.ingredientService.getByPagination(page, limit, direction, property);
     }
 
     @RequestMapping("/search")

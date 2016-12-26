@@ -9,6 +9,10 @@ import eu.yoannfleury.mapper.IngredientMapper;
 import eu.yoannfleury.repository.IngredientRepository;
 import eu.yoannfleury.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -55,7 +59,9 @@ public class IngredientService {
     }
 
     /**
-     * @return The list of all the ingredients
+     * Get all the persisted ingredients.
+     *
+     * @return The list of all the ingredients.
      */
     public List<IngredientDTO> getAll() {
         return this.ingredientMapper.entityListToDTOList(
@@ -63,6 +69,22 @@ public class IngredientService {
         );
     }
 
+    public List<IngredientDTO> getByPagination(int page, int limit,
+                                               Sort.Direction direction,
+                                               String property) {
+        Pageable pageable = new PageRequest(page, limit, direction, property);
+
+        Page<Ingredient> ingredientPage = this.ingredientRepository.findAll(pageable);
+
+        return this.ingredientMapper.entityListToDTOList(ingredientPage.getContent());
+    }
+
+    /**
+     * Search for an ingredient by its name.
+     *
+     * @param pattern The pattern of the ingredient's name to find.
+     * @return A list of {@link IngredientDTO}.
+     */
     public List<IngredientDTO> search(String pattern) {
         return this.ingredientMapper.entityListToDTOList(
                 this.ingredientRepository.findByPattern("%" + pattern + "%")
@@ -70,8 +92,10 @@ public class IngredientService {
     }
 
     /**
+     * Create a new {@link Ingredient}.
+     *
      * @param ingredient The ingredient to create.
-     * @return The ingredient newly created
+     * @return The ingredient newly created.
      */
     public IngredientDTO create(IngredientDTO ingredient) {
         this.ingredientRepository.save(
@@ -87,6 +111,8 @@ public class IngredientService {
     }
 
     /**
+     * Update an existing {@link Ingredient}.
+     *
      * @param id         The index of the ingredient you want to create.
      * @param ingredient The model with the new data.
      * @return The ingredient that matches with the parameter index, with the new values.
@@ -113,6 +139,11 @@ public class IngredientService {
         );
     }
 
+    /**
+     * Delete an {@link Ingredient}.
+     *
+     * @param id The index of the {@link Ingredient} to delete.
+     */
     public void delete(long id) {
         if (this.ingredientRepository.findOne(id) == null) {
             throw new IngredientNotFoundException(id);

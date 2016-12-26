@@ -112,3 +112,18 @@ qui fait le dépôt.
 * [ ] Faire une route sur le classement des effets les plus reportés
 * [ ] Faire une route sur le classement des effets les plus lourd
 * [ ] Ajouter le système de page sur les `findAll`
+
+## Architecture logique
+
+Notre architecture se veut plus complexe qu'un simple Web Service avec Spring.
+Notre code est plus vaste qu'un simple projet, mais permet d'avoir le contrôle 
+sur les données que renvoie notre Web Service grâce à l'abstraction 
+supplémentaire des **DTO** (Data Transfer Object). Grâce à cette abstraction, 
+nous choisissons ce qui est envoyé ou non par notre API. Les `Mappers` 
+permettent de mapper les champs entre l'entité et le `DTO`. Utiliser un 
+framework c'est bien pour la vitesse de développement, mais en avoir le contrôle
+est encore mieux, même si il faut perdre un peu de temps pour ça.
+
+Notre Web Service est protégé par une authentification par JWT (Json Web Token)
+qui assure l'intégrité de la connexion et qui permet de garder un Web Service
+sans état.
