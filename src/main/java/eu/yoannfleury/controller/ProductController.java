@@ -3,6 +3,7 @@ package eu.yoannfleury.controller;
 import eu.yoannfleury.dto.ProductDTO;
 import eu.yoannfleury.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,13 @@ public class ProductController {
     }
 
     @RequestMapping
-    public List<ProductDTO> products() {
-        return this.productService.getAll();
+    public List<ProductDTO> products(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "limit", defaultValue = "20") int limit,
+            @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
+            @RequestParam(value = "property", defaultValue = "id") String property
+    ) {
+        return this.productService.getByPagination(page, limit, direction, property);
     }
 
     @RequestMapping("/{id}")

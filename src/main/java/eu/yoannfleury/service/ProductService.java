@@ -9,6 +9,10 @@ import eu.yoannfleury.mapper.ProductMapper;
 import eu.yoannfleury.repository.IngredientRepository;
 import eu.yoannfleury.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,6 +68,16 @@ public class ProductService {
      */
     public List<ProductDTO> getAll() {
         return this.productMapper.entityListToDTOList(this.productRepository.findAll());
+    }
+
+    public List<ProductDTO> getByPagination(int page, int limit,
+                                               Sort.Direction direction,
+                                               String property) {
+        Pageable pageable = new PageRequest(page, limit, direction, property);
+
+        Page<Product> ingredientPage = this.productRepository.findAll(pageable);
+
+        return this.productMapper.entityListToDTOList(ingredientPage.getContent());
     }
 
     public List<ProductDTO> search(String pattern) {
