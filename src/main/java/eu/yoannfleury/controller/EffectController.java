@@ -3,6 +3,7 @@ package eu.yoannfleury.controller;
 import eu.yoannfleury.dto.EffectDTO;
 import eu.yoannfleury.service.EffectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,13 @@ public class EffectController {
     }
 
     @RequestMapping
-    public List<EffectDTO> effects() {
-        return this.effectService.getAll();
+    public List<EffectDTO> effects(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "limit", defaultValue = "20") int limit,
+            @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
+            @RequestParam(value = "property", defaultValue = "id") String property
+    ) {
+        return this.effectService.getByPagination(page, limit, direction, property);
     }
 
     @RequestMapping("/{id}")

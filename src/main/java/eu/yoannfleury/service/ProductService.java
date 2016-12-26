@@ -75,9 +75,9 @@ public class ProductService {
                                                String property) {
         Pageable pageable = new PageRequest(page, limit, direction, property);
 
-        Page<Product> ingredientPage = this.productRepository.findAll(pageable);
+        Page<Product> productPage = this.productRepository.findAll(pageable);
 
-        return this.productMapper.entityListToDTOList(ingredientPage.getContent());
+        return this.productMapper.entityListToDTOList(productPage.getContent());
     }
 
     public List<ProductDTO> search(String pattern) {

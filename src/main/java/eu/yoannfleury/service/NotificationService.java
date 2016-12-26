@@ -65,9 +65,9 @@ public class NotificationService {
                                             String property) {
         Pageable pageable = new PageRequest(page, limit, direction, property);
 
-        Page<Notification> ingredientPage = this.notificationRepository.findAll(pageable);
+        Page<Notification> notificationPage = this.notificationRepository.findAll(pageable);
 
-        return this.notificationMapper.entityListToDTOList(ingredientPage.getContent());
+        return this.notificationMapper.entityListToDTOList(notificationPage.getContent());
     }
 
     /**

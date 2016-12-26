@@ -7,6 +7,10 @@ import eu.yoannfleury.exception.EffectNotFoundException;
 import eu.yoannfleury.mapper.EffectMapper;
 import eu.yoannfleury.repository.EffectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +41,16 @@ public class EffectService {
         return this.effectMapper.entityListToDTOList(
                 this.effectRepository.findAll()
         );
+    }
+
+    public List<EffectDTO> getByPagination(int page, int limit,
+                                            Sort.Direction direction,
+                                            String property) {
+        Pageable pageable = new PageRequest(page, limit, direction, property);
+
+        Page<Effect> effectPage = this.effectRepository.findAll(pageable);
+
+        return this.effectMapper.entityListToDTOList(effectPage.getContent());
     }
 
     public List<EffectDTO> search(String pattern) {
