@@ -104,6 +104,18 @@ Les recherches sont insensibles à la casse. En voici la liste :
 * Recherche sur le **nom** d'un produit : `GET /products/search?value=recherche`
 * Recherche sur la **description** d'un effet : `GET /effect/search?value=recherche`
 
+## Pagination
+
+Il est possible de paginer sur les routes de type `GET` sur `/entities`.
+Les paramètres sont les suivants :
+
+* **page** `int` (défaut=0) : la page que l'on souhaite
+* **limit** `int` (défaut=20) : le nombre d'entité par page
+* **direction** `string` (défaut=ASC, valeurs=ASC|DESC) : le sens du tri
+* **property** `string` (défaut=id) : la propriété à trier
+
+Un exemple de pagination peut être : `/ingredients?page=2&limit=10&property=name`
+
 ## TODO
 
 * [ ] Vérifier le code lors d'un dépôt de notification
