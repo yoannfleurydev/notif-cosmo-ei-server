@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "notif-cosmo-ei.api-check.check-region-code",
+      "type": "java.lang.Boolean",
+      "description": "Tell if the application has to check for region's code or not."
+    },
+    {
+      "name": "notif-cosmo-ei.api-check.check-region-code-url",
+      "type": "java.lang.String",
+      "description": "The Url of the web service to check for codes."
+    }
+  ]
+}

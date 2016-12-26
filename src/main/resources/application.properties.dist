@@ -4,3 +4,6 @@ spring.datasource.username=notif-cosmo-ei
 spring.datasource.password=notif-cosmo-ei
 spring.jpa.generate-ddl=true
 spring.jpa.hibernate.ddl-auto=create-drop
+
+notif-cosmo-ei.api-check.check-region-code=true
+notif-cosmo-ei.api-check.check-region-code-url=https://geo.api.gouv.fr/regions

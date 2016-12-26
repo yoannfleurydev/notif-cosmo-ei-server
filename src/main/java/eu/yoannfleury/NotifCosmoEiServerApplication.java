@@ -1,8 +1,10 @@
 package eu.yoannfleury;
 
+import eu.yoannfleury.property.ApiCheckProperty;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 @SpringBootApplication
 @EnableAutoConfiguration
+@EnableConfigurationProperties(ApiCheckProperty.class)
 public class NotifCosmoEiServerApplication {
     @Bean
     public FilterRegistrationBean jwtFilter() {

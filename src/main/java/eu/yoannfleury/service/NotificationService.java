@@ -7,23 +7,23 @@ import eu.yoannfleury.entity.Notification;
 import eu.yoannfleury.exception.NotificationNotFoundException;
 import eu.yoannfleury.exception.RegionNotFoundException;
 import eu.yoannfleury.mapper.NotificationMapper;
+import eu.yoannfleury.property.ApiCheckProperty;
 import eu.yoannfleury.repository.EffectRepository;
 import eu.yoannfleury.repository.NotificationRepository;
 import eu.yoannfleury.repository.ProductRepository;
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 
 @Service
 public class NotificationService {
@@ -33,15 +33,19 @@ public class NotificationService {
 
     private NotificationMapper notificationMapper;
 
+    private ApiCheckProperty apiCheckProperty;
+
     @Autowired
     public NotificationService(NotificationRepository notificationRepository,
                                NotificationMapper notificationMapper,
                                EffectRepository effectRepository,
-                               ProductRepository productRepository) {
+                               ProductRepository productRepository,
+                               ApiCheckProperty apiCheckProperty) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
         this.effectRepository = effectRepository;
         this.productRepository = productRepository;
+        this.apiCheckProperty = apiCheckProperty;
     }
 
     /**
@@ -83,18 +87,29 @@ public class NotificationService {
      * @return The notification newly created
      */
     public NotificationDTO create(NotificationDTO notification) {
-        ConnectionSpec spec = new ConnectionSpec.Builder(
-                ConnectionSpec.MODERN_TLS
-        ).build();
+        if (apiCheckProperty.isCheckRegionCode() && checkForCode(notification)) {
+            Notification n = this.notificationRepository.save(
+                    this.notificationMapper.DTOToEntity(notification)
+            );
 
-        OkHttpClient client = new OkHttpClient.Builder().connectionSpecs(
-                Collections.singletonList(spec)
-        ).build();
+            return this.notificationMapper.entityToDTO(n);
+        } else {
+            Notification n = this.notificationRepository.save(
+                    this.notificationMapper.DTOToEntity(notification)
+            );
+
+            return this.notificationMapper.entityToDTO(n);
+        }
+    }
+
+
+    private boolean checkForCode(NotificationDTO notification) {
+        OkHttpClient client = new OkHttpClient();
 
         List<RegionDTO> regions;
 
         Request request = new Request.Builder()
-                .url("https://geo.api.gouv.fr/regions")
+                .url(this.apiCheckProperty.getCheckRegionCodeUrl())
                 .build();
 
         try {
@@ -110,20 +125,11 @@ public class NotificationService {
         boolean inArray = false;
         for (RegionDTO region : regions) {
             if (region.getCode().equals(notification.getCode())) {
-                inArray = true;
-                break;
+                return true;
             }
         }
 
-        if (inArray) {
-            Notification n = this.notificationRepository.save(
-                    this.notificationMapper.DTOToEntity(notification)
-            );
-
-            return this.notificationMapper.entityToDTO(n);
-        } else {
-            throw new RegionNotFoundException(notification.getCode());
-        }
+        throw new RegionNotFoundException(notification.getCode());
     }
 
     /**
