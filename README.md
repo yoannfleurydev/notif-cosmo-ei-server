@@ -111,7 +111,7 @@ Les recherches sont insensibles à la casse. En voici la liste :
 qui fait le dépôt.
 * [ ] Faire une route sur le classement des effets les plus reportés
 * [ ] Faire une route sur le classement des effets les plus lourd
-* [ ] Ajouter le système de page sur les `findAll`
+* [X] ~~Ajouter le système de page sur les `findAll`~~
 
 ## Architecture logique
 
