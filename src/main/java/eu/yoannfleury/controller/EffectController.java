@@ -38,7 +38,6 @@ public class EffectController {
     @RequestMapping("/search")
     public List<EffectDTO> search(
             @RequestParam(value = "value", defaultValue = "") String value) {
-        System.out.println(value);
         return this.effectService.search(value);
     }
 
@@ -56,5 +55,10 @@ public class EffectController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         this.effectService.delete(id);
+    }
+
+    @RequestMapping(value = "/most_reported")
+    public List<EffectDTO> mostReported() {
+        return this.effectService.mostReported();
     }
 }

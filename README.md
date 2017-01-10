@@ -71,8 +71,6 @@ tout se passe bien.
 retourne tous les effets et notifications en rapport avec le produit d'index 
 `id`.
 
-Exemple de retour des routes :
-
 ```json
 {
 	"product": {
@@ -133,6 +131,40 @@ si tout se passe bien.
 
 **DELETE /ingredients/{id}** : supprime l'ingrédient d'index `id`.
 
+### Effets
+
+**GET /effects** : retourne tous les effets stockés en base de données.
+
+**GET /effects/{id}** : retourne l'effet d'index `id`.
+
+**GET /effects/most\_reported** : retourne tous les effets par nombre de 
+déclarations.
+
+```json
+[
+	{
+		"id": 2,
+		"description": "Ca gratte",
+		"level": "UNKNOWN",
+		"nbNotifications": 9
+	},
+	{
+		"id": 1,
+		"description": "Ouille",
+		"level": "UNKNOWN",
+		"nbNotifications": 5
+	}
+]
+```
+
+**POST /effects** : crée un effet en base de données et le retourne si tout se 
+passe bien.
+
+**PUT /effects/{id}** : met à jour l'effet d'index `id` et le retourne si tout 
+se passe bien.
+
+**DELETE /effects/{id}** : supprime l'effet d'index `id`.
+
 ### Recherche
 
 Il est possible de rechercher des termes sur des champs précis des objets. 
@@ -191,8 +223,8 @@ désactivation de cette option.
 
 ## TODO
 
-* [ ] Faire une route sur le classement des effets les plus reportés
 * [ ] Faire une route sur le classement des effets les plus lourd
+* [X] ~~Faire une route sur le classement des effets les plus reportés~~
 * [X] ~~Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
 qui fait le dépôt.~~
 * [X] ~~Vérifier le code lors d'un dépôt de notification~~

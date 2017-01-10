@@ -2,7 +2,6 @@ package eu.yoannfleury.service;
 
 import eu.yoannfleury.dto.EffectDTO;
 import eu.yoannfleury.entity.Effect;
-import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.exception.EffectNotFoundException;
 import eu.yoannfleury.mapper.EffectMapper;
 import eu.yoannfleury.repository.EffectRepository;
@@ -13,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -54,7 +55,6 @@ public class EffectService {
     }
 
     public List<EffectDTO> search(String pattern) {
-        System.out.println(pattern);
         return this.effectMapper.entityListToDTOList(
                 this.effectRepository.findByPattern("%" + pattern + "%")
         );
@@ -87,5 +87,13 @@ public class EffectService {
             throw new EffectNotFoundException(id);
         }
         this.effectRepository.delete(id);
+    }
+
+    public List<EffectDTO> mostReported() {
+        List<Effect> effects = this.effectRepository.findAll();
+
+        effects.sort(Comparator.comparingInt(o -> -o.getNotifications().size()));
+
+        return this.effectMapper.entityListToDTOList(effects);
     }
 }

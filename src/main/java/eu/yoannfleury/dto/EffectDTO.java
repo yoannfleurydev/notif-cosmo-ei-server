@@ -14,14 +14,17 @@ public class EffectDTO {
 
     private Level level;
 
+    private int nbNotifications;
+
     public EffectDTO() {
         this.level = Level.UNKNOWN;
     }
 
-    public EffectDTO(long id, String description, Level level) {
+    public EffectDTO(long id, String description, Level level, int nbNotifications) {
         this.id = id;
         this.description = description;
         this.level = level;
+        this.nbNotifications = nbNotifications;
     }
 
     public long getId() {
@@ -46,5 +49,13 @@ public class EffectDTO {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public int getNbNotifications() {
+        return nbNotifications;
+    }
+
+    public void setNbNotifications(int nbNotifications) {
+        this.nbNotifications = nbNotifications;
     }
 }

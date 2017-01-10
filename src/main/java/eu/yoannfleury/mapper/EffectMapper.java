@@ -14,7 +14,8 @@ public class EffectMapper {
         return new EffectDTO(
                 entity.getId(),
                 entity.getDescription(),
-                entity.getLevel()
+                entity.getLevel(),
+                entity.getNotifications().size()
         );
     }
 
