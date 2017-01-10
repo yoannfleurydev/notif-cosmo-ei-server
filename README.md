@@ -116,15 +116,6 @@ Les paramètres sont les suivants :
 
 Un exemple de pagination peut être : `/ingredients?page=2&limit=10&property=name`
 
-## TODO
-
-* [ ] Vérifier le code lors d'un dépôt de notification
-* [ ] Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
-qui fait le dépôt.
-* [ ] Faire une route sur le classement des effets les plus reportés
-* [ ] Faire une route sur le classement des effets les plus lourd
-* [X] ~~Ajouter le système de page sur les `findAll`~~
-
 ## Architecture logique
 
 Notre architecture se veut plus complexe qu'un simple Web Service avec Spring.
@@ -140,7 +131,7 @@ Notre Web Service est protégé par une authentification par JWT (Json Web Token
 qui assure l'intégrité de la connexion et qui permet de garder un Web Service
 sans état.
 
-## Sécurité
+## Validité des données
 
 Afin de garantir un maximum la validité des données, nous faisons appel au web 
 service du gouvernement permettant de récupérer les régions françaises.
@@ -149,3 +140,20 @@ Pour pouvoir contacter cette API depuis le serveur, il faut que le certificat
 SSL de l'API en question soit dans les certificats connus par Java. Ce 
 [lien](http://magicmonster.com/kb/prg/java/ssl/pkix_path_building_failed.html) 
 contient la démarche.
+
+Il est possible de désactiver cette fonctionnalité grâce à l'option 
+`notif-cosmo-ei.api-check.check-region-code` qui est un booléen. A `false`, le 
+code de l'application ne vérifira pas le code des régions. 
+
+La vérification du code des régions prends également du temps. Dans le cas ou 
+la communication entre le serveur et le client est longue, nous conseillons la 
+désactivation de cette option.
+
+## TODO
+
+* [ ] Faire une route sur le classement des effets les plus reportés
+* [ ] Faire une route sur le classement des effets les plus lourd
+* [X] ~~Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
+qui fait le dépôt.~~
+* [X] ~~Vérifier le code lors d'un dépôt de notification~~
+* [X] ~~Ajouter le système de page sur les `findAll`~~
