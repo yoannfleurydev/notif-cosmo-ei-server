@@ -9,5 +9,5 @@ package eu.yoannfleury.entity;
 public enum Level {
     UNKNOWN,
     KNOWN,
-    SERIOUS
+    SEVERE
 }
