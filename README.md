@@ -67,6 +67,46 @@ tout se passe bien.
 
 **DELETE /products/{id}** : supprime le produit d'index `id`.
 
+**GET /products/{id}/effects** ou **GET /products/{id}/notifications** : 
+retourne tous les effets et notifications en rapport avec le produit d'index 
+`id`.
+
+Exemple de retour des routes :
+
+```json
+{
+	"product": {
+		"id": 1,
+		"name": "Shampoing",
+		"ingredients": [
+			2,
+			3
+		]
+	},
+	"effects": [
+		{
+			"id": 1,
+			"description": "Gratte",
+			"level": "UNKNOWN"
+		}
+	],
+	"notifications": [
+		{
+			"id": 2,
+			"user": 1,
+			"code": "28",
+			"date": 1484054514000,
+			"effects": [
+				1
+			],
+			"products": [
+				1
+			]
+		}
+	]
+}
+```
+
 ### Ingrédients
 
 **GET /ingredients** : retourne tous les ingrédients stockés en base de données.

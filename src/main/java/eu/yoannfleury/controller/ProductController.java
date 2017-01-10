@@ -1,6 +1,7 @@
 package eu.yoannfleury.controller;
 
 import eu.yoannfleury.dto.ProductDTO;
+import eu.yoannfleury.dto.composed.EffectsNotificationsByProductDTO;
 import eu.yoannfleury.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -57,5 +58,15 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id) {
         this.productService.delete(id);
+    }
+
+    @RequestMapping(value = "/{id}/effects")
+    public EffectsNotificationsByProductDTO getEffectsByProduct(@PathVariable long id) {
+        return this.productService.getEffectsNotificationsByProduct(id);
+    }
+
+    @RequestMapping(value = "/{id}/notifications")
+    public EffectsNotificationsByProductDTO getNotificationsByProduct(@PathVariable long id) {
+        return this.productService.getEffectsNotificationsByProduct(id);
     }
 }
