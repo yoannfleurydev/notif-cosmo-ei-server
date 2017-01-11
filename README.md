@@ -157,6 +157,30 @@ déclarations.
 ]
 ```
 
+**GET /effects/heaviest** : retourne tous les effets, classé par poids selon 
+le rôle de l'utilisateur pour chaque déclaration.
+
+L'exemple ci-dessous reprend celui juste au-dessus avec une déclaration de 
+médecin en plus pour l'effet **Ouille**, ce qui ajoute un poids de 5 et passe 
+donc au dessus de l'effet **Ca gratte**.
+
+```json
+[
+	{
+		"id": 1,
+		"description": "Ouille",
+		"level": "UNKNOWN",
+		"nbNotifications": 6
+	},
+	{
+		"id": 2,
+		"description": "Ca gratte",
+		"level": "UNKNOWN",
+		"nbNotifications": 9
+	}
+]
+```
+
 **POST /effects** : crée un effet en base de données et le retourne si tout se 
 passe bien.
 
@@ -223,7 +247,7 @@ désactivation de cette option.
 
 ## TODO
 
-* [ ] Faire une route sur le classement des effets les plus lourd
+* [X] ~~Faire une route sur le classement des effets les plus lourd~~
 * [X] ~~Faire une route sur le classement des effets les plus reportés~~
 * [X] ~~Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
 qui fait le dépôt.~~
