@@ -21,13 +21,17 @@ public class ProductDTO {
      */
     private List<Long> ingredients;
 
+    /**
+     * The default constructor.
+     */
     public ProductDTO() {
         this.ingredients = new LinkedList<>();
     }
 
     /**
-     * @param id          The index of the product
-     * @param name        The name of the product
+     * The consctructor with parameters.
+     * @param id          The index of the product.
+     * @param name        The name of the product.
      * @param ingredients The list of ingredients of the product.
      */
     public ProductDTO(long id, String name, List<Long> ingredients) {

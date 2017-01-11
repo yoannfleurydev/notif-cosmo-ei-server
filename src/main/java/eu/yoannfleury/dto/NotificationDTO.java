@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Notification Data Transfert Object.
+ */
 public class NotificationDTO {
     /**
      * The index of the notification.
