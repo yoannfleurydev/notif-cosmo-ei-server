@@ -244,12 +244,3 @@ code de l'application ne vérifira pas le code des régions.
 La vérification du code des régions prends également du temps. Dans le cas ou 
 la communication entre le serveur et le client est longue, nous conseillons la 
 désactivation de cette option.
-
-## TODO
-
-* [X] ~~Faire une route sur le classement des effets les plus lourd~~
-* [X] ~~Faire une route sur le classement des effets les plus reportés~~
-* [X] ~~Améliorer la route de dépôt de notifications pour y ajouter l'utilisateur
-qui fait le dépôt.~~
-* [X] ~~Vérifier le code lors d'un dépôt de notification~~
-* [X] ~~Ajouter le système de page sur les `findAll`~~
