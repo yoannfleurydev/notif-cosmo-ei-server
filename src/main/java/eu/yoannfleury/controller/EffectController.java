@@ -61,4 +61,9 @@ public class EffectController {
     public List<EffectDTO> mostReported() {
         return this.effectService.mostReported();
     }
+
+    @RequestMapping(value = "/heaviest")
+    public List<EffectDTO> heaviest() {
+        return this.effectService.heaviest();
+    }
 }

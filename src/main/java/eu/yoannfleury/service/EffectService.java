@@ -2,6 +2,7 @@ package eu.yoannfleury.service;
 
 import eu.yoannfleury.dto.EffectDTO;
 import eu.yoannfleury.entity.Effect;
+import eu.yoannfleury.entity.Notification;
 import eu.yoannfleury.exception.EffectNotFoundException;
 import eu.yoannfleury.mapper.EffectMapper;
 import eu.yoannfleury.repository.EffectRepository;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -93,6 +95,26 @@ public class EffectService {
         List<Effect> effects = this.effectRepository.findAll();
 
         effects.sort(Comparator.comparingInt(o -> -o.getNotifications().size()));
+
+        return this.effectMapper.entityListToDTOList(effects);
+    }
+
+    public List<EffectDTO> heaviest() {
+        List<Effect> effects = this.effectRepository.findAll();
+
+        effects.sort((o1, o2) -> {
+            double o1weight = 0;
+            for (Notification notification : o1.getNotifications()) {
+                o1weight += notification.getUser().getRole().getWeight();
+            }
+
+            double o2weight = 0;
+            for (Notification notification : o2.getNotifications()) {
+                o2weight += notification.getUser().getRole().getWeight();
+            }
+
+            return (int) (o2weight - o1weight);
+        });
 
         return this.effectMapper.entityListToDTOList(effects);
     }
