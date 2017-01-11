@@ -1,7 +1,5 @@
 package eu.yoannfleury.dto;
 
-import eu.yoannfleury.entity.Notification;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;

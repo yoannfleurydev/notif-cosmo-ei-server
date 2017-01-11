@@ -7,10 +7,8 @@ import eu.yoannfleury.entity.Product;
 import eu.yoannfleury.repository.EffectRepository;
 import eu.yoannfleury.repository.ProductRepository;
 import eu.yoannfleury.repository.UserRepository;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoRestTemplateCustomizer;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

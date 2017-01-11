@@ -1,7 +1,5 @@
 package eu.yoannfleury.entity;
 
-import org.aspectj.weaver.ast.Not;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedList;

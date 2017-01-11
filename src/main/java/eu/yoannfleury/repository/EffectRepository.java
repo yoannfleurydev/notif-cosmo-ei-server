@@ -2,7 +2,6 @@ package eu.yoannfleury.repository;
 
 import eu.yoannfleury.entity.Effect;
 import eu.yoannfleury.entity.Notification;
-import eu.yoannfleury.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
