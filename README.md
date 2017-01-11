@@ -1,12 +1,55 @@
-# Notification d'effets indésirables sur produits cosmétiques
+# Notification d'effets indésirables sur produits cosmétiques Web Service
+
+## Installation
+
+### Étape 1, cloner le dépôt
+
+```sh
+git clone git@github.com:yoannfleurydev/notif-cosmo-ei-server.git # via ssh
+git clone https://github.com/yoannfleurydev/notif-cosmo-ei-server.git # via http
+
+cd notif-cosmo-ei-server
+```
+
+### Étape 2, créer la base de données
+
+```sql
+CREATE DATABASE notifcosmoei
+```
+
+N'oubliez pas de créer un utilisateur et lui donner les droits suffisant sur cette base 
+de données. Les données seront à fournir par la suite dans le fichier de configuration
+de l'application.
+
+### Étape 3, configurer l'application
+
+```sh
+cp src/main/resources/application.properties.dist src/main/resources/application.properties
+vim src/main/resources/application.properties
+```
+
+Changez les paramètres en fonction de votre besoin. Changez le paramètre 
+`notif-cosmo-ei.api-check.check-region-code` à `false` si vous n'avez pas 
+ajouté le certificat SSL nécessaire pour contacter l'API du gouvernement 
+français. Dans le cas où vous souhaitez tout de même vérifier le code des 
+régions, [la documentation](#validité-des-données) pour installer le 
+certificat est disponible un peu plus bas.
+
+### Étape 4, lancer le serveur
+
+```sh
+./mvnw spring-boot:run # sous GNU/Linux
+mvnw.cmd spring-boot:run # sous Windows
+```
 
 ## Technologies
 
 Utilisation des technologies suivantes :
 
-* Java 8
+* Java 8 (utilisation de lambda, donc impossible en dessous)
 * Spring Boot
-* Angular
+* Angular (nouvelle version, utilisation de web component, utilisez Chrome, 
+Firefox dans leurs dernières versions)
 
 ## API
 
@@ -36,6 +79,12 @@ Utilisation des technologies suivantes :
     "password" : "azerty"
 }
 ```
+
+**NOTE :** Ces routes renvoient un token qui permet d'identifier l'utilisateur 
+en cours. Ce token est à envoyer pour les requêtes en `POST` dans le *header* 
+HTTP `Authorization` avec comme valeur `Bearer le_token`. Ceci permet au web 
+service de reconnaitre l'utilisateur. C'est ce qu'on appelle un JSON Web Token
+ou JWT.
 
 ### Produits
 
