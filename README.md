@@ -276,6 +276,53 @@ Notre Web Service est protégé par une authentification par JWT (Json Web Token
 qui assure l'intégrité de la connexion et qui permet de garder un Web Service
 sans état.
 
+### Diagrammes de l'architecture logicielle
+
+**Package principal:**
+
+![Package principal](doc/yoannfleury_package.png)
+
+**Contrôleurs :**
+
+![Contrôleurs](doc/controller_package.png)
+
+**DTO :**
+
+![DTO](doc/dto_package.png)
+
+**Entité :**
+
+![Entité](doc/entity_package.png)
+
+**Exception :**
+
+![Exceptions](doc/exception_package.png)
+
+**Mapper :**
+
+![Mapper](doc/mapper_package.png)
+
+**Propriétés de l'application :**
+
+![Proprétés de l'application](doc/property_package.png)
+
+**Repository :**
+
+![Repository](doc/repository_package.png)
+
+**Sécurité :**
+
+![Sécurité](doc/security_package.png)
+
+**Service :**
+![Service](doc/service_package.png)
+
+### Base de données
+
+Schema de la base de données 
+
+![Schema de la base de données](doc/database_schema.png)
+
 ## Validité des données
 
 Afin de garantir un maximum la validité des données, nous faisons appel au web 
