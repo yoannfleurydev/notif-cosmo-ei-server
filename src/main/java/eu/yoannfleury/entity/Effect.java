@@ -3,6 +3,7 @@ package eu.yoannfleury.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -24,11 +25,13 @@ public class Effect {
 
     public Effect() {
         this.level = Level.UNKNOWN;
+        this.notifications = new LinkedList<>();
     }
 
     public Effect(String description, Level level) {
         this.description = description;
         this.level = level;
+        this.notifications = new LinkedList<>();
     }
 
     public long getId() {
