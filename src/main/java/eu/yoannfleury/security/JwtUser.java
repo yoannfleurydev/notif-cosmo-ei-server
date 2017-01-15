@@ -9,11 +9,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Component
+@Service
 public class JwtUser implements IJwtUser {
     private UserRepository userRepository;
 

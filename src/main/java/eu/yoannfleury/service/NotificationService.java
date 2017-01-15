@@ -11,6 +11,8 @@ import eu.yoannfleury.property.ApiCheckProperty;
 import eu.yoannfleury.repository.EffectRepository;
 import eu.yoannfleury.repository.NotificationRepository;
 import eu.yoannfleury.repository.ProductRepository;
+import eu.yoannfleury.repository.UserRepository;
+import eu.yoannfleury.security.IJwtUser;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,31 +23,38 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class NotificationService {
-    private NotificationRepository notificationRepository;
-    private EffectRepository effectRepository;
-    private ProductRepository productRepository;
+    private final NotificationRepository notificationRepository;
+    private final EffectRepository effectRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
 
-    private NotificationMapper notificationMapper;
+    private final NotificationMapper notificationMapper;
 
-    private ApiCheckProperty apiCheckProperty;
+    private final ApiCheckProperty apiCheckProperty;
+    private final IJwtUser iJwtUser;
 
     @Autowired
     public NotificationService(NotificationRepository notificationRepository,
                                NotificationMapper notificationMapper,
                                EffectRepository effectRepository,
                                ProductRepository productRepository,
-                               ApiCheckProperty apiCheckProperty) {
+                               UserRepository userRepository,
+                               ApiCheckProperty apiCheckProperty,
+                               IJwtUser iJwtUser) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
         this.effectRepository = effectRepository;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
         this.apiCheckProperty = apiCheckProperty;
+        this.iJwtUser = iJwtUser;
     }
 
     /**
@@ -80,6 +89,16 @@ public class NotificationService {
         Page<Notification> notificationPage = this.notificationRepository.findAll(pageable);
 
         return this.notificationMapper.entityListToDTOList(notificationPage.getContent());
+    }
+
+    public List<NotificationDTO> getByUser(HttpServletRequest request) {
+        return this.notificationMapper.entityListToDTOList(
+                this.notificationRepository.findByUser(
+                        this.userRepository.findOne(
+                                this.iJwtUser.getUser(request).getId()
+                        )
+                )
+        );
     }
 
     /**

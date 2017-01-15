@@ -59,4 +59,9 @@ public class NotificationController {
     public void delete(@PathVariable long id) {
         this.notificationService.delete(id);
     }
+
+    @RequestMapping(value = "/myself")
+    public List<NotificationDTO> myNotification(HttpServletRequest request) {
+        return this.notificationService.getByUser(request);
+    }
 }
