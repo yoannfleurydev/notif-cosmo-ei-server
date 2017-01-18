@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -47,8 +48,11 @@ public class EffectController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "limit", defaultValue = "20") int limit,
             @RequestParam(value = "direction", defaultValue = "ASC") Sort.Direction direction,
-            @RequestParam(value = "property", defaultValue = "id") String property
+            @RequestParam(value = "property", defaultValue = "id") String property,
+            HttpServletResponse httpServletResponse
     ) {
+        Integer pages = (int) Math.ceil((double)this.effectService.getAll().size() / (double)limit);
+        httpServletResponse.setHeader("X-Pages", pages.toString());
         return this.effectService.getByPagination(page, limit, direction, property);
     }
 
