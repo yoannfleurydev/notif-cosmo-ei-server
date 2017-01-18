@@ -238,6 +238,21 @@ se passe bien.
 
 **DELETE /effects/{id}** : supprime l'effet d'index `id`.
 
+### Notifications
+
+**GET /notifications** : retourne toutes les notifications stockées en base de données.
+
+**GET /notifications/myself** : retourne toutes les notifications déposées par moi.
+
+**GET /notifications/{id}** : permet de récupérer la notification correspendante à 
+l'index passé en paramètre
+
+**POST /notifications** : permet de poster une notification
+
+**PUT /notifications/{id}** : permet de mettre à jour la notification d'index `id`
+
+**DELETE /notifications/{id}** : permet de supprimer la notification d'index `id`
+
 ### Recherche
 
 Il est possible de rechercher des termes sur des champs précis des objets. 
