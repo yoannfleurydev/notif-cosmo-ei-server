@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/effects")
 public class EffectController {
+
     /**
      * The effect service is used to do a CRUD on database.
      */
@@ -40,7 +41,9 @@ public class EffectController {
      * @param page The page you want to get.
      * @param limit The number of item per page.
      * @param direction The direction, ascending or descending.
-     * @param property The property on witch to apply the previous filters
+     * @param property The property on witch to apply the previous filters.
+     * @param httpServletResponse The response object used to set a header to
+     *                            indicate the number of pages.
      * @return A list of {@link EffectDTO}.
      */
     @RequestMapping
