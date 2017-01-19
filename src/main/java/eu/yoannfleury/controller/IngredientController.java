@@ -17,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
+    /**
+     * The ingredient service to fetch the data and map them.
+     */
     private final IngredientService ingredientService;
 
     /**

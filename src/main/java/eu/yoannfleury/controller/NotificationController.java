@@ -14,13 +14,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The notification controller is used for the mapping for the notification
+ * routes.
+ */
 @RestController
 @RequestMapping("/notifications")
 public class NotificationController {
+    /**
+     * The notifications service is used to fetch and map the data.
+     */
     private final NotificationService notificationService;
 
+    /**
+     * The {@link IJwtUser} is used to get the username of the current user.
+     */
     private IJwtUser iJwtUser;
 
+    /**
+     * Notification controller
+     * @param notificationService Auto inject notification service to fetch data
+     *                            from database.
+     * @param iJwtUser jwt service to check the current user.
+     */
     @Autowired
     public NotificationController(NotificationService notificationService,
                                   IJwtUser iJwtUser) {
